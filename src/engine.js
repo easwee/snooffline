@@ -1,7 +1,7 @@
 function Engine(config) {
   this.config = {
     canvasId: config || "display",
-    fps: config || 60,
+    fps: config || 60
   };
 
   this.time = {
@@ -14,18 +14,22 @@ function Engine(config) {
 
 Engine.prototype.init = function() {
   this.canvas = document.getElementById(this.config.canvasId);
-  this.canvas.width = window.innerWidth;
-  this.canvas.height = window.innerHeight;
+  this.canvas.width = 800; // window.innerWidth;
+  this.canvas.height = 600; // window.innerHeight;
   this.ctx = this.canvas.getContext("2d");
+  this.gfx = new Graphics();
+  this.game = new Game();
 
-  this.roadPixelData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
-  this.generatePixels(0);
+  let cached = this.gfx.addToCache("cocaine", "src/cocaine.png");
 
-  this.loop();
+  cached.then(() => {
+    this.loop();
+  });
 };
 
 Engine.prototype.loop = function() {
   requestAnimationFrame(this.loop.bind(this));
+
   var t = this.time;
 
   t.now = performance.now();
@@ -33,41 +37,17 @@ Engine.prototype.loop = function() {
 
   if (t.delta > t.interval) {
     t.then = t.now - (t.delta % t.interval);
-    // draw and update here
-    this.drawBackground();
-    this.generatePixels(t.now*1000);
-    this.drawRoad();
+
+    this.update(t.delta);
+    this.render();
   }
 };
 
-Engine.prototype.drawBackground = function() {
-  this.ctx.fillStyle = "black";
-  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-}
+Engine.prototype.render = function() {
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.gfx.render(this.canvas, this.ctx);
+};
 
-Engine.prototype.drawRoad = function() {
-  this.ctx.putImageData(this.roadPixelData, 0, 0);
-}
-
-Engine.prototype.generatePixels = function(offset) {
-  for (var x=0; x<this.canvas.width; x++) {
-    for (var y=0; y<this.canvas.height; y++) {
-        // Get the pixel index
-        var pixelindex = (y * this.canvas.width + x) * 4;
-
-        // Generate a xor pattern with some random noise
-        var red = ((x+offset) % 256) ^ ((y+offset) % 256);
-        var green = ((2*x+offset) % 256) ^ ((2*y+offset) % 256);
-        var blue = 50;
-
-        // Rotate the colors
-        blue = (blue) % 256;
-
-        // Set the pixel data
-        this.roadPixelData.data[pixelindex] = red;     // Red
-        this.roadPixelData.data[pixelindex+1] = green; // Green
-        this.roadPixelData.data[pixelindex+2] = blue;  // Blue
-        this.roadPixelData.data[pixelindex+3] = 255;   // Alpha
-    }
-  }
-}
+Engine.prototype.update = function(delta) {
+  this.game.update(delta);
+};

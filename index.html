@@ -3,16 +3,34 @@
 
 <head>
   <title>Snooffline</title>
+  <script src="src/utils.js"></script>
   <script src="src/engine.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/graphics.js"></script>
   <style>
-    /*Fullscreen canvas*/
-    * { margin:0; padding:0; }
-    html, body { width:100%; height:100%; }
-    canvas { display:block; }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      border: 1px solid black;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
   </style>
 </head>
 
-<body>  
+<body>
   <canvas id="display"></canvas>
   <script>
     const snooffline = new Engine();
