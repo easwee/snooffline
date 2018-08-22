@@ -19,26 +19,7 @@ Engine.prototype.init = function() {
   this.ctx = this.canvas.getContext("2d");
 
   this.roadPixelData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
-  for (var x=0; x<this.canvas.width; x++) {
-    for (var y=0; y<this.canvas.height; y++) {
-        // Get the pixel index
-        var pixelindex = (y * this.canvas.width + x) * 4;
-
-        // Generate a xor pattern with some random noise
-        var red = ((x) % 256) ^ ((y) % 256);
-        var green = ((2*x) % 256) ^ ((2*y) % 256);
-        var blue = 50 + Math.floor(Math.random()*100);
-
-        // Rotate the colors
-        blue = (blue) % 256;
-
-        // Set the pixel data
-        this.roadPixelData.data[pixelindex] = red;     // Red
-        this.roadPixelData.data[pixelindex+1] = green; // Green
-        this.roadPixelData.data[pixelindex+2] = blue;  // Blue
-        this.roadPixelData.data[pixelindex+3] = 255;   // Alpha
-    }
-}
+  this.generatePixels(0);
 
   this.loop();
 };
@@ -54,6 +35,7 @@ Engine.prototype.loop = function() {
     t.then = t.now - (t.delta % t.interval);
     // draw and update here
     this.drawBackground();
+    this.generatePixels(t.now*1000);
     this.drawRoad();
   }
 };
@@ -65,4 +47,27 @@ Engine.prototype.drawBackground = function() {
 
 Engine.prototype.drawRoad = function() {
   this.ctx.putImageData(this.roadPixelData, 0, 0);
+}
+
+Engine.prototype.generatePixels = function(offset) {
+  for (var x=0; x<this.canvas.width; x++) {
+    for (var y=0; y<this.canvas.height; y++) {
+        // Get the pixel index
+        var pixelindex = (y * this.canvas.width + x) * 4;
+
+        // Generate a xor pattern with some random noise
+        var red = ((x+offset) % 256) ^ ((y+offset) % 256);
+        var green = ((2*x+offset) % 256) ^ ((2*y+offset) % 256);
+        var blue = 50;
+
+        // Rotate the colors
+        blue = (blue) % 256;
+
+        // Set the pixel data
+        this.roadPixelData.data[pixelindex] = red;     // Red
+        this.roadPixelData.data[pixelindex+1] = green; // Green
+        this.roadPixelData.data[pixelindex+2] = blue;  // Blue
+        this.roadPixelData.data[pixelindex+3] = 255;   // Alpha
+    }
+  }
 }
