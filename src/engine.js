@@ -1,7 +1,7 @@
 function Engine(config) {
   this.config = {
     canvasId: config || "display",
-    fps: config || 60
+    fps: config || 60,
   };
 
   this.time = {
@@ -31,5 +31,11 @@ Engine.prototype.loop = function() {
   if (t.delta > t.interval) {
     t.then = t.now - (t.delta % t.interval);
     // draw and update here
+    this.drawBackground();
   }
 };
+
+Engine.prototype.drawBackground = function() {
+  this.ctx.fillStyle = "black";
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+}

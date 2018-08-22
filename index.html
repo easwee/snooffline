@@ -4,9 +4,15 @@
 <head>
   <title>Snooffline</title>
   <script src="src/engine.js"></script>
+  <style>
+    /*Fullscreen canvas*/
+    * { margin:0; padding:0; }
+    html, body { width:100%; height:100%; }
+    canvas { display:block; }
+  </style>
 </head>
 
-<body>
+<body>  
   <canvas id="display"></canvas>
   <script>
     const snooffline = new Engine();
