@@ -24,6 +24,16 @@ Player.prototype.update = function(game) {
     this.y = game.config.groundPoint;
     this.didJump = false;
   }
+
+  if(game.controls.pressed[ENUMS.LEFT] && this.x > 200) {
+    this.x -= 200
+    game.controls.pressed[ENUMS.LEFT] = false;
+  }
+
+  if(game.controls.pressed[ENUMS.RIGHT]  && this.x < 600) {
+    this.x += 200
+    game.controls.pressed[ENUMS.RIGHT] = false;
+  }
 };
 
 Player.prototype.jump = function(jumpHeight) {
