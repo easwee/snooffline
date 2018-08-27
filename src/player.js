@@ -27,12 +27,14 @@ Player.prototype.update = function(game) {
     this.didJump = false;
   }
 
-  if (game.controls.pressed[ENUMS.LEFT] && this.x > game.config.leftBorder) {
+  if (game.controls.pressed[ENUMS.LEFT] && this.x > game.config.leftBorder) {    
+    game.sound.playSound(110);
     this.velocityX = -10;
     game.controls.pressed[ENUMS.LEFT] = false;
 
   }
   if (game.controls.pressed[ENUMS.RIGHT] && this.x < game.config.rightBorder) {
+    game.sound.playSound(55);
     this.velocityX = 10;
     game.controls.pressed[ENUMS.RIGHT] = false;
 
