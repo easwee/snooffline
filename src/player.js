@@ -4,6 +4,7 @@ function Player() {
   this.velocityY = 0;
   this.velocityX = 0;
   this.acceleration = 1;
+  this.radius = 16;
   this.didJump = false;
 }
 
@@ -22,7 +23,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "right";
     }
-    game.sound.playSound(55);
+    game.sound.playSound(110, 0.1);
     this.velocityX += this.acceleration;
   }
 
@@ -31,7 +32,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "left";
     }
-    game.sound.playSound(110);
+    game.sound.playSound(110, 0.1);
     this.velocityX -= this.acceleration;
   }
 

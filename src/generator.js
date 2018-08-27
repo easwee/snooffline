@@ -6,7 +6,7 @@ function Generator(config) {
     changeInterval: 3,
     lastChange: undefined
   };
-  this.spawnInterval = 10000;
+  this.spawnInterval = 1000;
   this.interval = null;
 }
 
@@ -19,7 +19,7 @@ Generator.prototype.init = function(game) {
 
 Generator.prototype.create = function(game) {
   console.log("Creating cocaine...");
-  var element = new Cocaine(game.canvas.weight / 2, game.config.horizontPoint);
+  var element = new Cocaine(game.canvas.width / 2, game.config.horizontPoint);
   this.elements.push(element);
 };
 
@@ -38,6 +38,7 @@ Generator.prototype.update = function(game) {
   this.elements.forEach((element, index) => {
     if (collision(element, game.player)) {
       this.destroy(index);
+      game.sound.playSound(12, 0.7);
     } else if (element.y > game.canvas.height) {
       this.destroy(index);
     } else {
