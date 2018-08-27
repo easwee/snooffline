@@ -47,7 +47,10 @@ Game.prototype.init = function() {
   this.controls = new Controls();
   this.player = new Player();
 
-  let cached = this.addToCache("cocaine", "src/cocaine.png");
+  let cached = Promise.all([
+    this.addToCache("cocaine", "src/cocaine.png"),
+    this.addToCache("tree", "src/tree.svg")
+  ]);
 
   cached.then(() => {
     this.controls.init();
