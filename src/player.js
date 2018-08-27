@@ -5,6 +5,7 @@ function Player() {
   this.velocityX = 0;
   this.acceleration = 1;
   this.radius = 16;
+  this.score = 0;
   this.didJump = false;
 }
 
@@ -12,6 +13,14 @@ Player.prototype.render = function(game) {
   game.ctx.fillStyle = "red";
   game.ctx.fillRect(~~(this.x - 16), ~~(this.y - 16), 32, 32);
 };
+
+Player.prototype.incrementScore = function(game) {
+  this.score++;
+}
+
+Player.prototype.decrementScore = function(game) {
+  this.score--;
+}
 
 Player.prototype.update = function(game) {
   if (!this.didJump && game.controls.pressed[ENUMS.SPACE]) {
@@ -23,7 +32,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "right";
     }
-    game.sound.playSound(110, 0.1);
+    game.sound.playSound(60, 0.1);
     this.velocityX += this.acceleration;
   }
 
@@ -32,7 +41,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "left";
     }
-    game.sound.playSound(110, 0.1);
+    game.sound.playSound(60, 0.1);
     this.velocityX -= this.acceleration;
   }
 

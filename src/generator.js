@@ -1,25 +1,40 @@
 function Generator(config) {
   this.elements = [];
 
-  this.direction = {
-    current: "left",
-    changeInterval: 3,
-    lastChange: undefined
+  this.spawn = {
+    direction: -1, //Left -1, Right 1
+    interval: 150, //ms
+    changeInterval: 3000, //ms
+    lastPosition: undefined
   };
-  this.spawnInterval = 1000;
-  this.interval = null;
+
+  this.spawnIntervalHandler = null;
+  this.changeIntervalHandler = null;
 }
 
 Generator.prototype.init = function(game) {
-  this.create(game);
-  this.interval = setInterval(() => {
+  this.spawn.lastPosition = game.canvas.width / 2;
+
+  this.spawnIntervalHandler = setInterval(() => {
     this.create(game);
-  }, this.spawnInterval);
+  }, this.spawn.interval);
+
+  this.changeIntervalHandler = setInterval(() => {
+    this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
+  }, this.spawn.changeInterval);
 };
 
 Generator.prototype.create = function(game) {
   console.log("Creating cocaine...");
-  var element = new Cocaine(game.canvas.width / 2, game.config.horizontPoint);
+  this.spawn.lastPosition += this.spawn.direction * 10;
+  if (
+    this.spawn.lastPosition < game.config.horizontLeft ||
+    this.spawn.lastPosition > game.config.horizontRight
+  ) {
+    this.spawn.direction = -this.spawn.direction;
+  }
+
+  var element = new Cocaine(this.spawn.lastPosition, game.config.horizontPoint);
   this.elements.push(element);
 };
 
@@ -38,7 +53,8 @@ Generator.prototype.update = function(game) {
   this.elements.forEach((element, index) => {
     if (collision(element, game.player)) {
       this.destroy(index);
-      game.sound.playSound(12, 0.7);
+      game.sound.playSound(32, 0.1);
+      game.player.incrementScore();
     } else if (element.y > game.canvas.height) {
       this.destroy(index);
     } else {

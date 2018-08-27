@@ -30,17 +30,27 @@ Environment.prototype.render = function(game) {
 Environment.prototype.drawBackground = function(game) {
   game.ctx.fillStyle = "black";
   game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
+  game.ctx.fillStyle = "red";
+  game.ctx.font = "30px Arial";
+  game.ctx.fillText(`Snooffline`,10,30);
+  game.ctx.font = "20px Arial";
+  game.ctx.fillText(`Score: ${game.player.score}`,10,60);
 };
 
 Environment.prototype.drawRoad = function(game) {
   game.ctx.strokeStyle = "#FF0000";
   game.ctx.beginPath();
-  game.ctx.moveTo(0, 600);
-  game.ctx.lineTo(350, 300);
-  game.ctx.moveTo(800, 600);
-  game.ctx.lineTo(450, 300);
-  game.ctx.moveTo(0, 300);
-  game.ctx.lineTo(800, 300);
+  //Horizon point is at [400, 250]
+  //Left lane
+  game.ctx.moveTo(0, game.canvas.height);
+  game.ctx.lineTo(game.config.horizontLeft, game.config.horizontPoint);
+  //Right lane
+  game.ctx.moveTo(game.canvas.width, game.canvas.height);
+  game.ctx.lineTo(game.config.horizontRight, game.config.horizontPoint);
+  //Horizon
+  game.ctx.moveTo(0, game.config.horizontPoint);
+  game.ctx.lineTo(game.canvas.width, game.config.horizontPoint);
+
   game.ctx.stroke();
 };
 

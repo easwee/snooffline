@@ -6,7 +6,9 @@ function Game(config) {
     friction: 0.5,
     jumpImpulse: 10,
     groundPoint: 500,
-    horizontPoint: 100,
+    horizontPoint: 300,
+    horizontLeft: 350,
+    horizontRight: 450,
     leftBorder: 150,
     rightBorder: 650
   };
