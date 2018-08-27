@@ -57,6 +57,7 @@ Game.prototype.init = function() {
   ]);
 
   cached.then(() => {
+    this.generator.init(this);
     this.controls.init();
     this.sound.init();
     this.loop();
@@ -71,9 +72,9 @@ Game.prototype.loop = function(time) {
 
   if (t.delta > t.interval) {
     t.then = t.now - (t.delta % t.interval);
-    this.update(t.delta);
-    this.render();
   }
+  this.update();
+  this.render();
   requestAnimationFrame(this.loop.bind(this));
 };
 

@@ -9,7 +9,7 @@ function Player() {
 
 Player.prototype.render = function(game) {
   game.ctx.fillStyle = "red";
-  game.ctx.fillRect(this.x - 16, this.y - 16, 32, 32);
+  game.ctx.fillRect(~~(this.x - 16), ~~(this.y - 16), 32, 32);
 };
 
 Player.prototype.update = function(game) {

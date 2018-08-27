@@ -1,5 +1,4 @@
-function Cocaine(id, x, y) {
-  this.id = id;
+function Cocaine(x, y) {
   this.x = x;
   this.y = y;
   this.width = 2;
@@ -10,9 +9,14 @@ function Cocaine(id, x, y) {
 
 Cocaine.prototype.render = function(game) {
   const graphic = game.cache["cocaine"];
+  debugger;
   game.ctx.drawImage(graphic, this.x, this.y, this.width, this.height);
 };
 
 Cocaine.prototype.update = function(game) {
+  debugger;
   this.y += this.speed;
+  this.width += 0.5;
+  this.height += 0.5;
+  console.log(this.y, this.width, this.height);
 };
