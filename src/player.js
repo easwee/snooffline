@@ -3,13 +3,13 @@ function Player() {
   this.y = 200;
   this.velocityY = 0;
   this.velocityX = 0;
-  this.acceleration = 2;
+  this.acceleration = 1;
   this.didJump = false;
 }
 
 Player.prototype.render = function(game) {
   game.ctx.fillStyle = "red";
-  game.ctx.fillRect(this.x-16, this.y-16, 32, 32);
+  game.ctx.fillRect(this.x - 16, this.y - 16, 32, 32);
 };
 
 Player.prototype.update = function(game) {
@@ -17,7 +17,21 @@ Player.prototype.update = function(game) {
     this.jump(game.config.jumpImpulse);
   }
 
-  this.y += this.velocityY;
+  if (game.controls.pressed[ENUMS.RIGHT]) {
+    if (this.direction !== "right") {
+      this.velocityX = 0;
+      this.direction = "right";
+    }
+    this.velocityX += this.acceleration;
+  }
+
+  if (game.controls.pressed[ENUMS.LEFT]) {
+    if (this.direction !== "left") {
+      this.velocityX = 0;
+      this.direction = "left";
+    }
+    this.velocityX -= this.acceleration;
+  }
 
   if (this.y < game.config.groundPoint) {
     this.y -= game.config.gravity;
@@ -27,28 +41,22 @@ Player.prototype.update = function(game) {
     this.didJump = false;
   }
 
-  if (game.controls.pressed[ENUMS.LEFT] && this.x > game.config.leftBorder) {
-    this.velocityX = -10;
-    game.controls.pressed[ENUMS.LEFT] = false;
-
-  }
-  if (game.controls.pressed[ENUMS.RIGHT] && this.x < game.config.rightBorder) {
-    this.velocityX = 10;
-    game.controls.pressed[ENUMS.RIGHT] = false;
-
+  if (this.velocityX > 0 || this.velocityX < 0) {
+    this.velocityX +=
+      game.config.friction * (this.direction === "right" ? -1 : 1);
   }
 
-  if (this.velocityX !== 0) {
-    const modifier = this.velocityX > 0 ? -1 : 1;
-    this.velocityX = this.velocityX + modifier*(1/this.acceleration);
-
-    if (this.x < game.config.leftBorder && this.velocityX < 0) this.velocityX = 0;
-    if (this.x > game.config.rightBorder && this.velocityX > 0) this.velocityX = 0;
+  if (this.x < game.config.leftBorder) {
+    this.x = game.config.leftBorder;
+    this.velocityX = 0;
+  }
+  if (this.x > game.config.rightBorder) {
+    this.x = game.config.rightBorder;
+    this.velocityX = 0;
   }
 
-  if (this.x < game.config.leftBorder) this.x = game.config.leftBorder;
-  if (this.x > game.config.rightBorder) this.x = game.config.rightBorder;
-  else this.x += this.velocityX;
+  this.x += this.velocityX;
+  this.y += this.velocityY;
 };
 
 Player.prototype.jump = function(jumpHeight) {

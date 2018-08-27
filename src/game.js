@@ -3,8 +3,10 @@ function Game(config) {
     canvasId: config || "display",
     fps: config || 60,
     gravity: 0.5,
+    friction: 0.5,
     jumpImpulse: 10,
     groundPoint: 500,
+    horizontPoint: 100,
     leftBorder: 150,
     rightBorder: 650
   };
@@ -46,6 +48,7 @@ Game.prototype.init = function() {
   this.environment = new Environment();
   this.controls = new Controls();
   this.player = new Player();
+  this.generator = new Generator();
 
   let cached = Promise.all([
     this.addToCache("cocaine", "src/cocaine.png"),
@@ -76,10 +79,12 @@ Game.prototype.render = function() {
   var game = this;
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.environment.render(game);
+  this.generator.render(game);
   this.player.render(game);
 };
 
 Game.prototype.update = function(delta) {
   var game = this;
+  this.generator.update(game);
   this.player.update(game);
 };
