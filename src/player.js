@@ -2,6 +2,8 @@ function Player() {
   this.x = 400;
   this.y = 400;
   this.velocityY = 0;
+  this.velocityX = 0;
+  this.acceleration = 2;
   this.didJump = false;
 }
 
@@ -25,15 +27,28 @@ Player.prototype.update = function(game) {
     this.didJump = false;
   }
 
-  if(game.controls.pressed[ENUMS.LEFT] && this.x > 200) {
-    this.x -= 200
+  if (game.controls.pressed[ENUMS.LEFT] && this.x > game.config.leftBorder) {
+    this.velocityX = -10;
     game.controls.pressed[ENUMS.LEFT] = false;
+
+  }
+  if (game.controls.pressed[ENUMS.RIGHT] && this.x < game.config.rightBorder) {
+    this.velocityX = 10;
+    game.controls.pressed[ENUMS.RIGHT] = false;
+
   }
 
-  if(game.controls.pressed[ENUMS.RIGHT]  && this.x < 600) {
-    this.x += 200
-    game.controls.pressed[ENUMS.RIGHT] = false;
+  if (this.velocityX !== 0) {
+    const modifier = this.velocityX > 0 ? -1 : 1;
+    this.velocityX = this.velocityX + modifier*(1/this.acceleration);
+
+    if (this.x < game.config.leftBorder && this.velocityX < 0) this.velocityX = 0;
+    if (this.x > game.config.rightBorder && this.velocityX > 0) this.velocityX = 0;
   }
+
+  if (this.x < game.config.leftBorder) this.x = game.config.leftBorder;
+  if (this.x > game.config.rightBorder) this.x = game.config.rightBorder;
+  else this.x += this.velocityX;
 };
 
 Player.prototype.jump = function(jumpHeight) {

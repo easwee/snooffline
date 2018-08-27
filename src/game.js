@@ -4,7 +4,9 @@ function Game(config) {
     fps: config || 60,
     gravity: 0.5,
     jumpImpulse: 10,
-    groundPoint: 400
+    groundPoint: 400,
+    leftBorder: 200,
+    rightBorder: 600
   };
 
   this.time = {
