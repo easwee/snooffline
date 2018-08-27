@@ -23,6 +23,7 @@ Environment.prototype.addToCache = async function(id, graphicSrc) {
 Environment.prototype.render = function(game) {
   this.drawBackground(game);
   this.drawRoad(game);
+  this.drawCocaine(game);
 };
 
 Environment.prototype.drawBackground = function(game) {
@@ -31,6 +32,16 @@ Environment.prototype.drawBackground = function(game) {
 };
 
 Environment.prototype.drawRoad = function(game) {
+ game.ctx.strokeStyle="#FF0000";
+ game.ctx.beginPath();
+ game.ctx.moveTo(0,600);
+ game.ctx.lineTo(350,300);
+ game.ctx.moveTo(800,600);
+ game.ctx.lineTo(450,300);
+ game.ctx.stroke();
+};
+
+Environment.prototype.drawCocaine = function(game) {
   for (var i = -game.cache["cocaine"].height; i < game.canvas.height; i += 50) {
     game.ctx.drawImage(
       game.cache["cocaine"],

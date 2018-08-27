@@ -1,6 +1,6 @@
 function Player() {
   this.x = 400;
-  this.y = 400;
+  this.y = 200;
   this.velocityY = 0;
   this.velocityX = 0;
   this.acceleration = 2;
@@ -9,7 +9,7 @@ function Player() {
 
 Player.prototype.render = function(game) {
   game.ctx.fillStyle = "red";
-  game.ctx.fillRect(this.x, this.y, 32, 32);
+  game.ctx.fillRect(this.x-16, this.y-16, 32, 32);
 };
 
 Player.prototype.update = function(game) {
