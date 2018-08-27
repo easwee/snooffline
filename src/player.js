@@ -22,6 +22,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "right";
     }
+    game.sound.playSound(55);
     this.velocityX += this.acceleration;
   }
 
@@ -30,6 +31,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "left";
     }
+    game.sound.playSound(110);
     this.velocityX -= this.acceleration;
   }
 

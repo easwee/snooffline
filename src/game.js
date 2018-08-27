@@ -49,6 +49,7 @@ Game.prototype.init = function() {
   this.controls = new Controls();
   this.player = new Player();
   this.generator = new Generator();
+  this.sound = new Sound();
 
   let cached = Promise.all([
     this.addToCache("cocaine", "src/cocaine.png"),
@@ -57,6 +58,7 @@ Game.prototype.init = function() {
 
   cached.then(() => {
     this.controls.init();
+    this.sound.init();
     this.loop();
   });
 };
