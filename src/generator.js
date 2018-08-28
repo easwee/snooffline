@@ -13,30 +13,22 @@ function Generator(config) {
 }
 
 Generator.prototype.init = function(game) {
-  const env = game.geometry.environment;
   this.spawn.lastPosition = game.canvas.width / 2;
-
-  this.angleMax =
-    90 -
-    (Math.atan2(env.height - env.focalPoint.y, env.width - env.focalPoint.x) *
-      180) /
-      Math.PI;
-  this.angleStep = this.angleMax / ((env.horizontRight - env.horizontLeft) / 2);
 
   this.spawnIntervalHandler = setInterval(() => {
     this.create(game);
   }, this.spawn.interval);
 
-  this.changeIntervalHandler = setInterval(() => {
-    this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
-  }, this.spawn.changeInterval);
+  // this.changeIntervalHandler = setInterval(() => {
+  //   this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
+  // }, this.spawn.changeInterval);
 };
 
 Generator.prototype.create = function(game) {
   this.spawn.lastPosition += this.spawn.direction * 10;
   if (
-    this.spawn.lastPosition < game.geometry.environment.horizontLeft.x ||
-    this.spawn.lastPosition > game.geometry.environment.horizontRight.x
+    this.spawn.lastPosition < game.geometry.environment.horizontLeft.x + 20 ||
+    this.spawn.lastPosition > game.geometry.environment.horizontRight.x - 20
   ) {
     this.spawn.direction = -this.spawn.direction;
   }
@@ -60,7 +52,11 @@ Generator.prototype.render = function(game) {
 
 Generator.prototype.update = function(game) {
   this.elements.forEach((element, index) => {
-    if (collision(element, game.player)) {
+    if (
+      !game.player.didJump &&
+      element.y <= game.player.y &&
+      collision(element, game.player)
+    ) {
       this.destroy(index);
       game.sound.playSound(32, 0.1, game.config.mute);
       game.player.incrementScore();
