@@ -13,7 +13,15 @@ function Generator(config) {
 }
 
 Generator.prototype.init = function(game) {
+  const env = game.geometry.environment;
   this.spawn.lastPosition = game.canvas.width / 2;
+
+  this.angleMax =
+    90 -
+    (Math.atan2(env.height - env.focalPoint.y, env.width - env.focalPoint.x) *
+      180) /
+      Math.PI;
+  this.angleStep = this.angleMax / ((env.horizontRight - env.horizontLeft) / 2);
 
   this.spawnIntervalHandler = setInterval(() => {
     this.create(game);
@@ -25,7 +33,6 @@ Generator.prototype.init = function(game) {
 };
 
 Generator.prototype.create = function(game) {
-  console.log("Creating cocaine...");
   this.spawn.lastPosition += this.spawn.direction * 10;
   if (
     this.spawn.lastPosition < game.geometry.environment.horizontLeft.x ||
@@ -34,12 +41,14 @@ Generator.prototype.create = function(game) {
     this.spawn.direction = -this.spawn.direction;
   }
 
-  var element = new Cocaine(this.spawn.lastPosition, game.geometry.environment.horizontAtY);
+  var element = new Cocaine(
+    this.spawn.lastPosition,
+    game.geometry.environment.horizontAtY
+  );
   this.elements.push(element);
 };
 
 Generator.prototype.destroy = function(index) {
-  console.log("Destroying cocaine...");
   this.elements.splice(index, 1);
 };
 
