@@ -56,22 +56,40 @@ Environment.prototype.drawRoad = function(game) {
 };
 
 Environment.prototype.drawTrees = function(game) {
-  if (230 + this.treeTicker > game.canvas.height) this.treeTicker = 0;
+  const env = game.geometry.environment;
 
-  // const ptA = {x: game.geometry.horizontAtY }
-  // const slope = (y2 - y1)/(x2 - x1);
+  const originLeft = {x: env.horizontLeft.x - 50, y: env.horizontAtY};
+  const originRight = {x: env.horizontRight.x + 50, y: env.horizontAtY};
 
-  for (let i = 0; i < 4; i++) {
-    let treeY = 260 + this.treeTicker + i * 80;
+  if (env.horizontAtY + this.treeTicker > game.canvas.height) this.treeTicker = 0;
+
+  for (let i = 0; i < 6; i++) {
+    let treeY = env.horizontAtY + this.treeTicker + i*60;
     if (treeY > game.canvas.height) treeY = 260 - game.canvas.height + treeY;
 
-    const treeX = game.canvas.width / 2 - treeY;
+    const treeLoc = pointAtY(env.focalPoint, env.bottomLeft , treeY)
+    const size = treeY/5
     game.ctx.drawImage(
       game.cache["tree"],
-      treeX / 0.6,
-      treeY,
-      0.25 * treeY,
-      0.25 * treeY
+      treeLoc.x - size/2 - 100,
+      treeLoc.y - size/2,
+      size,
+      size
+    );
+  }
+
+  for (let i = 0; i < 6; i++) {
+    let treeY = env.horizontAtY + this.treeTicker + i*60;
+    if (treeY > game.canvas.height) treeY = 260 - game.canvas.height + treeY;
+
+    const treeLoc = pointAtY(env.focalPoint, env.bottomRight , treeY)
+    const size = treeY/5
+    game.ctx.drawImage(
+      game.cache["tree"],
+      treeLoc.x - size/2 + 100,
+      treeLoc.y - size/2,
+      size,
+      size
     );
   }
 
