@@ -2,6 +2,7 @@ function Game(config) {
   this.config = {
     canvasId: config || "display",
     fps: config || 60,
+    mute: true,
     gravity: 0.5,
     friction: 0.5,
     jumpImpulse: 10,

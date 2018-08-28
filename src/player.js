@@ -16,11 +16,11 @@ Player.prototype.render = function(game) {
 
 Player.prototype.incrementScore = function(game) {
   this.score++;
-}
+};
 
 Player.prototype.decrementScore = function(game) {
   this.score--;
-}
+};
 
 Player.prototype.update = function(game) {
   if (!this.didJump && game.controls.pressed[ENUMS.SPACE]) {
@@ -32,7 +32,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "right";
     }
-    game.sound.playSound(60, 0.1);
+    game.sound.playSound(60, 0.1, game.config.mute);
     this.velocityX += this.acceleration;
   }
 
@@ -41,7 +41,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "left";
     }
-    game.sound.playSound(60, 0.1);
+    game.sound.playSound(60, 0.1, game.config.mute);
     this.velocityX -= this.acceleration;
   }
 
