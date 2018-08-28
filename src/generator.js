@@ -4,7 +4,7 @@ function Generator(config) {
   this.spawn = {
     direction: -1, //Left -1, Right 1
     interval: 150, //ms
-    changeInterval: 3000, //ms
+    changeInterval: 1000, //ms
     lastPosition: undefined
   };
 

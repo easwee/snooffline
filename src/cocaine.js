@@ -1,6 +1,8 @@
 function Cocaine(x, y) {
   this.x = x;
   this.y = y;
+  this.startPosX = x;
+  this.startPosY = y;
   this.width = 2;
   this.height = 2;
   this.radius = 2;
@@ -13,8 +15,14 @@ Cocaine.prototype.render = function(game) {
 };
 
 Cocaine.prototype.update = function(game) {
+  const env = game.geometry.environment;
+
   this.y += this.speed;
-  this.x = this.x > game.canvas.width/2 ? this.x+.5 : this.x-.5
+  this.x = pointAtY(
+    env.focalPoint,
+    { x: this.startPosX, y: this.startPosY },
+    this.y
+  ).x;
   this.width += 0.5;
   this.height += 0.5;
   this.radius += 0.5;
