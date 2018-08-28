@@ -53,7 +53,7 @@ Generator.prototype.update = function(game) {
   this.elements.forEach((element, index) => {
     if (collision(element, game.player)) {
       this.destroy(index);
-      game.sound.playSound(32, 0.1);
+      game.sound.playSound(32, 0.1, game.config.mute);
       game.player.incrementScore();
     } else if (element.y > game.canvas.height) {
       this.destroy(index);

@@ -7,10 +7,11 @@ Sound.prototype.init = function(game) {
   this.context = new AudioContext();
 };
 
-Sound.prototype.playSound = function(freq, duration) {
+Sound.prototype.playSound = function(freq, duration, mute) {
+  if (mute) return;
   //console.log("playing sound with freq:", freq);
   //this.source && this.source.stop();
-
+  debugger;
   var buffer = this.context.createBuffer(1, 22050, 22050);
   for (var channel = 0; channel < buffer.numberOfChannels; channel++) {
     // This gives us the actual ArrayBuffer that contains the data
@@ -26,6 +27,8 @@ Sound.prototype.playSound = function(freq, duration) {
   this.source = this.context.createBufferSource(); // creates a sound source
   this.source.connect(this.context.destination); // connect the source to the context's destination (the speakers)
   this.source.buffer = buffer; // tell the source which sound to play
+
+  this.source.gain.value = 0;
   this.source.start(0, 0, duration); // play the source now
   // note: on older systems, may have to use deprecated noteOn(time);
 };
