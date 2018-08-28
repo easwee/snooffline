@@ -6,7 +6,6 @@ function Controls() {
   };
 
   this.onKeydown = event => {
-    console.log("key:", event.keyCode);
     this.pressed[event.keyCode] = true;
   };
 

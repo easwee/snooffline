@@ -9,7 +9,6 @@ Sound.prototype.init = function(game) {
 
 Sound.prototype.playSound = function(freq, duration, mute) {
   if (mute) return;
-  //console.log("playing sound with freq:", freq);
   //this.source && this.source.stop();
   debugger;
   var buffer = this.context.createBuffer(1, 22050, 22050);
@@ -21,7 +20,6 @@ Sound.prototype.playSound = function(freq, duration, mute) {
       // Math.random() is in [0; 1.0]
       // audio needs to be in [-1.0; 1.0]
       nowBuffering[i] = Math.sin(i / (freq / (Math.PI * 2)));
-      //if(i < 100) console.log(nowBuffering[i], i)
     }
   }
   this.source = this.context.createBufferSource(); // creates a sound source

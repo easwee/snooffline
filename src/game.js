@@ -8,7 +8,7 @@ function Game(config) {
     jumpImpulse: 10,
     groundPoint: 500,
     leftBorder: 150,
-    rightBorder: 650,   
+    rightBorder: 650
   };
 
   this.time = {
@@ -22,7 +22,6 @@ function Game(config) {
 }
 
 Game.prototype.addToCache = async function(id, graphicSrc) {
-  console.log("Caching...");
   return new Promise((resolve, reject) => {
     var canvas = document.createElement("canvas");
     var context = canvas.getContext("2d");
@@ -51,13 +50,13 @@ Game.prototype.init = function() {
       y: 200,
       width: 32,
       height: 32,
-      radius: 16,
+      radius: 16
     },
     environment: this.calculateEnvironment({
-      x: this.canvas.width/2,
-      y: 250,
+      x: this.canvas.width / 2,
+      y: 250
     })
-  }
+  };
 
   this.environment = new Environment();
   this.controls = new Controls();
@@ -83,16 +82,20 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
   const env = {
     width: this.canvas.width,
     height: this.canvas.height,
-    horizontAtY: this.canvas.height/2,
+    horizontAtY: this.canvas.height / 2,
     focalPoint,
-    bottomLeft: {x: 0, y: this.canvas.height},
-    bottomRight: {x: this.canvas.width, y: this.canvas.height}
-  }
+    bottomLeft: { x: 0, y: this.canvas.height },
+    bottomRight: { x: this.canvas.width, y: this.canvas.height }
+  };
 
-  env.horizontLeft = pointAtY(env.focalPoint, env.bottomLeft, env.horizontAtY)
-  env.horizontRight = pointAtY(env.focalPoint, env.bottomRight, env.horizontAtY)
+  env.horizontLeft = pointAtY(env.focalPoint, env.bottomLeft, env.horizontAtY);
+  env.horizontRight = pointAtY(
+    env.focalPoint,
+    env.bottomRight,
+    env.horizontAtY
+  );
   return env;
-}
+};
 
 Game.prototype.loop = function(time) {
   var t = this.time;
