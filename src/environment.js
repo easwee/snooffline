@@ -32,9 +32,9 @@ Environment.prototype.drawBackground = function(game) {
   game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
   game.ctx.fillStyle = "red";
   game.ctx.font = "30px Arial";
-  game.ctx.fillText(`Snooffline`,10,30);
+  game.ctx.fillText(`Snooffline`, 10, 30);
   game.ctx.font = "20px Arial";
-  game.ctx.fillText(`Score: ${game.player.score}`,10,60);
+  game.ctx.fillText(`Score: ${game.player.score}`, 10, 60);
 };
 
 Environment.prototype.drawRoad = function(game) {
@@ -44,13 +44,13 @@ Environment.prototype.drawRoad = function(game) {
   //Horizon point is at [400, 250]
   //Left lane
   game.ctx.moveTo(0, game.canvas.height);
-  game.ctx.lineTo(environment.horizontLeft, environment.horizontPoint);
+  game.ctx.lineTo(environment.horizontLeft.x, environment.horizontLeft.y);
   //Right lane
   game.ctx.moveTo(game.canvas.width, game.canvas.height);
-  game.ctx.lineTo(environment.horizontRight, environment.horizontPoint);
+  game.ctx.lineTo(environment.horizontRight.x, environment.horizontRight.y);
   //Horizon
-  game.ctx.moveTo(0, environment.horizontPoint);
-  game.ctx.lineTo(game.canvas.width, environment.horizontPoint);
+  game.ctx.moveTo(0, environment.horizontAtY);
+  game.ctx.lineTo(game.canvas.width, environment.horizontAtY);
 
   game.ctx.stroke();
 };
@@ -58,7 +58,7 @@ Environment.prototype.drawRoad = function(game) {
 Environment.prototype.drawTrees = function(game) {
   if (230 + this.treeTicker > game.canvas.height) this.treeTicker = 0;
 
-  // const ptA = {x: game.geometry.horizontPoint }
+  // const ptA = {x: game.geometry.horizontAtY }
   // const slope = (y2 - y1)/(x2 - x1);
 
   for (let i = 0; i < 4; i++) {

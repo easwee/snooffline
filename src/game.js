@@ -53,17 +53,10 @@ Game.prototype.init = function() {
       height: 32,
       radius: 16,
     },
-    environment: {
-      width: this.canvas.width,
-      height: this.canvas.height,
-      vertex: {
-        x: this.canvas.width/2,
-        y: 250,
-      },
-      horizontPoint: this.canvas.height/2,
-      horizontLeft: 350,
-      horizontRight: 450,
-    }
+    environment: this.calculateEnvironment({
+      x: this.canvas.width/2,
+      y: 250,
+    })
   }
 
   this.environment = new Environment();
@@ -85,6 +78,31 @@ Game.prototype.init = function() {
     this.loop();
   });
 };
+
+Game.prototype.calculateEnvironment = function(focalPoint) {
+  const env = {
+    width: this.canvas.width,
+    height: this.canvas.height,
+    horizontAtY: this.canvas.height/2,
+    focalPoint,
+    bottomLeft: {x: 0, y: this.canvas.height},
+    bottomRight: {x: this.canvas.width, y: this.canvas.height}
+  }
+  // env.slopeLeft = (env.focalPoint.y - env.bottomLeft.y)/(env.focalPoint.x - env.bottomLeft.x);
+  // env.offsetLeft = {n: env.focalPoint.y - env.slopeLeft*env.focalPoint.x }
+
+  // env.horizontLeft = {x: env.focalPoint.x*env.slopeLeft + env.offsetLeft.n, y: env.horizontAtY};
+
+  // env.slopeRight = (env.focalPoint.y - env.bottomRight.y)/(env.focalPoint.x - env.bottomRight.x); 
+  // env.offsetRight = {n: env.focalPoint.y - env.slopeRight*env.focalPoint.x + env.height/2 }
+
+  // env.horizontRight = {x: env.focalPoint.x*env.slopeRight + env.offsetRight.n, y: env.horizontAtY};
+  env.horizontLeft = {x: 350, y: env.horizontAtY};
+  env.horizontRight = {x: 450, y: env.horizontAtY};
+  console.log(env)
+
+  return env;
+}
 
 Game.prototype.loop = function(time) {
   var t = this.time;

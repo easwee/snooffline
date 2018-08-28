@@ -28,13 +28,13 @@ Generator.prototype.create = function(game) {
   console.log("Creating cocaine...");
   this.spawn.lastPosition += this.spawn.direction * 10;
   if (
-    this.spawn.lastPosition < game.geometry.environment.horizontLeft ||
-    this.spawn.lastPosition > game.geometry.environment.horizontRight
+    this.spawn.lastPosition < game.geometry.environment.horizontLeft.x ||
+    this.spawn.lastPosition > game.geometry.environment.horizontRight.x
   ) {
     this.spawn.direction = -this.spawn.direction;
   }
 
-  var element = new Cocaine(this.spawn.lastPosition, game.geometry.environment.horizontPoint);
+  var element = new Cocaine(this.spawn.lastPosition, game.geometry.environment.horizontAtY);
   this.elements.push(element);
 };
 
