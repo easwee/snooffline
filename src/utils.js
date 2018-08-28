@@ -17,3 +17,13 @@ function collision(c1, c2) {
 
   return dx * dx + dy * dy <= dist * dist;
 }
+
+/**
+ * Get point on line at y
+ * Usage: pointAtY({x: 10, y: 20}, {x: 150, y: 250}, y);
+ */
+function pointAtY(p1, p2, y) {
+  const k = (p1.y - p2.y) / (p1.x - p2.x);
+  const n = p1.y - k * p1.x;
+  return { x: (y - n) / k, y: y };
+}
