@@ -7,11 +7,8 @@ function Game(config) {
     friction: 0.5,
     jumpImpulse: 10,
     groundPoint: 500,
-    horizontPoint: 300,
-    horizontLeft: 350,
-    horizontRight: 450,
     leftBorder: 150,
-    rightBorder: 650
+    rightBorder: 650,   
   };
 
   this.time = {
@@ -48,6 +45,27 @@ Game.prototype.init = function() {
   this.canvas.height = 600; // window.innerHeight;
   this.ctx = this.canvas.getContext("2d");
 
+  this.geometry = {
+    player: {
+      x: 400,
+      y: 200,
+      width: 32,
+      height: 32,
+      radius: 16,
+    },
+    environment: {
+      width: this.canvas.width,
+      height: this.canvas.height,
+      vertex: {
+        x: this.canvas.width/2,
+        y: 250,
+      },
+      horizontPoint: this.canvas.height/2,
+      horizontLeft: 350,
+      horizontRight: 450,
+    }
+  }
+
   this.environment = new Environment();
   this.controls = new Controls();
   this.player = new Player();
@@ -61,6 +79,7 @@ Game.prototype.init = function() {
 
   cached.then(() => {
     this.generator.init(this);
+    this.player.init(this);
     this.controls.init();
     this.sound.init();
     this.loop();

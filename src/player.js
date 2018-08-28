@@ -1,6 +1,6 @@
 function Player() {
-  this.x = 400;
-  this.y = 200;
+  this.x = null;
+  this.y = null;
   this.velocityY = 0;
   this.velocityX = 0;
   this.acceleration = 1;
@@ -9,9 +9,17 @@ function Player() {
   this.didJump = false;
 }
 
+Player.prototype.init = function(game) {
+  this.y = game.geometry.player.y
+  this.x = game.geometry.player.x
+  this.radius = game.geometry.player.radius
+}
+
 Player.prototype.render = function(game) {
+  const player = game.geometry.player;
+  
   game.ctx.fillStyle = "red";
-  game.ctx.fillRect(~~(this.x - 16), ~~(this.y - 16), 32, 32);
+  game.ctx.fillRect(~~(this.x - player.width/2), ~~(this.y - player.height/2), player.width, player.height);
 };
 
 Player.prototype.incrementScore = function(game) {

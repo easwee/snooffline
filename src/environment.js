@@ -38,24 +38,28 @@ Environment.prototype.drawBackground = function(game) {
 };
 
 Environment.prototype.drawRoad = function(game) {
+  const environment = game.geometry.environment;
   game.ctx.strokeStyle = "#FF0000";
   game.ctx.beginPath();
   //Horizon point is at [400, 250]
   //Left lane
   game.ctx.moveTo(0, game.canvas.height);
-  game.ctx.lineTo(game.config.horizontLeft, game.config.horizontPoint);
+  game.ctx.lineTo(environment.horizontLeft, environment.horizontPoint);
   //Right lane
   game.ctx.moveTo(game.canvas.width, game.canvas.height);
-  game.ctx.lineTo(game.config.horizontRight, game.config.horizontPoint);
+  game.ctx.lineTo(environment.horizontRight, environment.horizontPoint);
   //Horizon
-  game.ctx.moveTo(0, game.config.horizontPoint);
-  game.ctx.lineTo(game.canvas.width, game.config.horizontPoint);
+  game.ctx.moveTo(0, environment.horizontPoint);
+  game.ctx.lineTo(game.canvas.width, environment.horizontPoint);
 
   game.ctx.stroke();
 };
 
 Environment.prototype.drawTrees = function(game) {
   if (230 + this.treeTicker > game.canvas.height) this.treeTicker = 0;
+
+  // const ptA = {x: game.geometry.horizontPoint }
+  // const slope = (y2 - y1)/(x2 - x1);
 
   for (let i = 0; i < 4; i++) {
     let treeY = 260 + this.treeTicker + i * 80;
