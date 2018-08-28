@@ -88,19 +88,15 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
     bottomLeft: {x: 0, y: this.canvas.height},
     bottomRight: {x: this.canvas.width, y: this.canvas.height}
   }
-  // env.slopeLeft = (env.focalPoint.y - env.bottomLeft.y)/(env.focalPoint.x - env.bottomLeft.x);
-  // env.offsetLeft = {n: env.focalPoint.y - env.slopeLeft*env.focalPoint.x }
+  env.slopeLeft = (env.focalPoint.y - env.bottomLeft.y)/(env.focalPoint.x - env.bottomLeft.x);
+  env.offsetLeft = {n: env.focalPoint.y - env.slopeLeft*env.focalPoint.x }
+  env.horizontLeft = {x: (env.horizontAtY - env.offsetLeft.n)/env.slopeLeft, y: env.horizontAtY};
 
-  // env.horizontLeft = {x: env.focalPoint.x*env.slopeLeft + env.offsetLeft.n, y: env.horizontAtY};
+  env.slopeRight = (env.focalPoint.y - env.bottomRight.y)/(env.focalPoint.x - env.bottomRight.x); 
+  env.offsetRight = {n: env.focalPoint.y - env.slopeRight*env.focalPoint.x }
+  env.horizontRight = {x: (env.horizontAtY - env.offsetRight.n)/env.slopeRight, y: env.horizontAtY};
 
-  // env.slopeRight = (env.focalPoint.y - env.bottomRight.y)/(env.focalPoint.x - env.bottomRight.x); 
-  // env.offsetRight = {n: env.focalPoint.y - env.slopeRight*env.focalPoint.x + env.height/2 }
-
-  // env.horizontRight = {x: env.focalPoint.x*env.slopeRight + env.offsetRight.n, y: env.horizontAtY};
-  env.horizontLeft = {x: 350, y: env.horizontAtY};
-  env.horizontRight = {x: 450, y: env.horizontAtY};
   console.log(env)
-
   return env;
 }
 
