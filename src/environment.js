@@ -40,7 +40,6 @@ Environment.prototype.drawRoad = function(game) {
   const environment = game.geometry.environment;
   game.ctx.strokeStyle = "#FF0000";
   game.ctx.beginPath();
-  //Horizon point is at [400, 250]
   //Left lane
   game.ctx.moveTo(0, game.canvas.height);
   game.ctx.lineTo(environment.horizontLeft.x, environment.horizontLeft.y);
