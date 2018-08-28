@@ -10,20 +10,28 @@ function Player() {
 }
 
 Player.prototype.init = function(game) {
-  this.y = game.geometry.player.y
-  this.x = game.geometry.player.x
-  this.radius = game.geometry.player.radius
-}
+  this.y = game.geometry.player.y;
+  this.x = game.geometry.player.x;
+  this.radius = game.geometry.player.radius;
+};
 
 Player.prototype.render = function(game) {
   const player = game.geometry.player;
-  
+
   game.ctx.fillStyle = "red";
-  game.ctx.fillRect(~~(this.x - player.width/2), ~~(this.y - player.height/2), player.width, player.height);
+  game.ctx.fillRect(
+    ~~(this.x - player.width / 2),
+    ~~(this.y - player.height / 2),
+    player.width,
+    player.height
+  );
 };
 
 Player.prototype.incrementScore = function(game) {
-  this.score++;
+  if (!this.didJump) {
+    console.log("incrementing, did jump is:", this.didJump);
+    this.score++;
+  }
 };
 
 Player.prototype.decrementScore = function(game) {

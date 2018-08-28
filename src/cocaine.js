@@ -10,20 +10,20 @@ function Cocaine(x, y) {
 }
 
 Cocaine.prototype.render = function(game) {
+  game.ctx.fillStyle = "red";
+  game.ctx.fillRect(this.x, this.y, this.width, this.height);
   const graphic = game.cache["cocaine"];
   game.ctx.drawImage(graphic, this.x, this.y, this.width, this.height);
 };
 
 Cocaine.prototype.update = function(game) {
   const env = game.geometry.environment;
-
-  this.y += this.speed;
-  this.x = pointAtY(
-    env.focalPoint,
-    { x: this.startPosX, y: this.startPosY },
-    this.y
-  ).x;
   this.width += 0.5;
   this.height += 0.5;
   this.radius += 0.5;
+  this.y += this.speed;
+  this.x =
+    pointAtY(env.focalPoint, { x: this.startPosX, y: this.startPosY }, this.y)
+      .x -
+    this.width / 2;
 };
