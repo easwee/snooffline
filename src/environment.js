@@ -1,6 +1,11 @@
 function Environment() {
   this.switch = 0;
   this.ticker = 0;
+  this.numBuildings = 25
+  this.heights = [];
+  for(let i = 0; i < this.numBuildings; ++i) {
+    this.heights.push(20+ Math.random()*100)
+  }
 }
 
 Environment.prototype.addToCache = async function(id, graphicSrc) {
@@ -27,14 +32,37 @@ Environment.prototype.render = function(game) {
 };
 
 Environment.prototype.drawBackground = function(game) {
+  const env = game.geometry.environment;
+  game.ctx.shadowBlur = 10;
+  game.ctx.shadowColor = "white";
+
   game.ctx.fillStyle = "black";
-  game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
+  game.ctx.fillRect(0, 0, env.width, env.height);
   game.ctx.fillStyle = "red";
   game.ctx.font = "30px Arial";
   game.ctx.fillText(`Snooffline`, 10, 30);
   game.ctx.font = "20px Arial";
   game.ctx.fillText(`Score: ${game.player.score}`, 10, 60);
+
+  game.ctx.strokeStyle = "#0000FF";
+  for(let i = 0; i < this.numBuildings; ++i) {
+    this.drawBuilding(game, i*(30+5), this.heights[i], 30);
+  }
+
 };
+
+Environment.prototype.drawBuilding = function(game, x, height, width) {
+  const env = game.geometry.environment;
+  var poly=[x, env.horizontAtY, 
+    x, env.horizontAtY - height, 
+    x + width, env.horizontAtY - height, 
+    x + width, env.horizontAtY ];
+
+  game.ctx.beginPath();
+  game.ctx.moveTo(poly[0], poly[1]);
+  for( item=2 ; item < poly.length-1 ; item+=2 ){game.ctx.lineTo( poly[item] , poly[item+1] )}
+  game.ctx.stroke();
+}
 
 Environment.prototype.drawRoad = function(game) {
   const env = game.geometry.environment;
