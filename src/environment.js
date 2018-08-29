@@ -55,7 +55,7 @@ Environment.prototype.drawRoad = function(game) {
   game.ctx.lineTo(env.horizontRight.x, env.horizontRight.y);
 
   //Road lines
-  const numLines = 15;
+  const numLines = 20;
   const tick = game.time.now%numLines;
   for(let i = 0; i < numLines; ++i) {
     const Y = env.horizontAtY + i*20 + tick;
