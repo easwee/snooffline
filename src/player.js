@@ -41,6 +41,7 @@ Player.prototype.decrementScore = function(game) {
 Player.prototype.update = function(game) {
   if (!this.didJump && game.controls.pressed[ENUMS.SPACE]) {
     this.jump(game.config.jumpImpulse);
+    game.sound.playSound(game.sound.sounds.JUMP);
   }
 
   if (game.controls.pressed[ENUMS.RIGHT]) {
@@ -48,7 +49,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "right";
     }
-    game.sound.playSound(60, 0.1, game.config.mute);
+    game.sound.playSound(game.sound.sounds.MOVE);
     this.velocityX += this.acceleration;
   }
 
@@ -57,7 +58,7 @@ Player.prototype.update = function(game) {
       this.velocityX = 0;
       this.direction = "left";
     }
-    game.sound.playSound(60, 0.1, game.config.mute);
+    game.sound.playSound(game.sound.sounds.MOVE);
     this.velocityX -= this.acceleration;
   }
 
@@ -89,5 +90,5 @@ Player.prototype.update = function(game) {
 
 Player.prototype.jump = function(jumpHeight) {
   this.didJump = true;
-  this.velocityY = -jumpHeight;
+  this.velocityY = -jumpHeight;  
 };

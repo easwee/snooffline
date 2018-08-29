@@ -1,32 +1,83 @@
-function Sound() {
-  this.y = 200;
-}
+function Sound() {}
 
 Sound.prototype.init = function(game) {
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  this.context = new AudioContext();
+  this.sounds = {
+    MOVE: 1,
+    PICKUP_COCAINE: 2,
+    JUMP: 3,
+    BONUS: 4,
+  };
 };
 
-Sound.prototype.playSound = function(freq, duration, mute) {
-  if (mute) return;
-  //this.source && this.source.stop();
-  debugger;
-  var buffer = this.context.createBuffer(1, 22050, 22050);
-  for (var channel = 0; channel < buffer.numberOfChannels; channel++) {
-    // This gives us the actual ArrayBuffer that contains the data
-    var nowBuffering = buffer.getChannelData(channel);
-
-    for (var i = 0; i < buffer.length; i++) {
-      // Math.random() is in [0; 1.0]
-      // audio needs to be in [-1.0; 1.0]
-      nowBuffering[i] = Math.sin(i / (freq / (Math.PI * 2)));
-    }
+Sound.prototype.playSound = function(sound) {
+  switch (sound) {
+    case this.sounds.PICKUP_COCAINE:
+      this.pickupSound();
+      break;
+    case this.sounds.MOVE:
+      this.moveSound();
+      break;
+    case this.sounds.BONUS:
+      this.bonusSound();
+      break;
+    case this.sounds.JUMP:
+      this.jumpSound();
+      break;
+    default:
+      console.warn("No such sound:", sound);
   }
-  this.source = this.context.createBufferSource(); // creates a sound source
-  this.source.connect(this.context.destination); // connect the source to the context's destination (the speakers)
-  this.source.buffer = buffer; // tell the source which sound to play
-
-  this.source.gain.value = 0;
-  this.source.start(0, 0, duration); // play the source now
-  // note: on older systems, may have to use deprecated noteOn(time);
 };
+
+Sound.prototype.jumpSound = function() {
+  soundEffect(
+    523.25,       //frequency
+    0.05,         //attack
+    0.2,          //decay
+    "sine",       //waveform
+    3,            //volume
+    0.8,          //pan
+    0,            //wait before playing
+    600,          //pitch bend amount
+    true,         //reverse
+    100,          //random pitch range
+    0,            //dissonance
+    undefined,    //echo array: [delay, feedback, filter]
+    undefined     //reverb array: [duration, decay, reverse?]
+  );
+};
+
+Sound.prototype.moveSound = function() {
+  soundEffect(
+    110,       //frequency
+    0.01,         //attack
+    0.01,          //decay
+    "sine",       //waveform
+    3,            //volume
+    0.8,          //pan
+    0,            //wait before playing
+    600,          //pitch bend amount
+    true,         //reverse
+    100,          //random pitch range
+    0,            //dissonance
+    undefined,    //echo array: [delay, feedback, filter]
+    undefined     //reverb array: [duration, decay, reverse?]
+  );
+};
+
+Sound.prototype.pickupSound = function() {
+ //D
+ soundEffect(midiTable[74].frq, 0, 0.2, "square", 1, 0, 0);
+ //A
+ soundEffect(midiTable[81].frq, 0, 0.2, "square", 1, 0, 0.1);
+ //High D
+ soundEffect(midiTable[98].frq, 0, 0.3, "square", 1, 0, 0.2);
+};
+
+Sound.prototype.bonusSound = function() {
+  //D
+  soundEffect(587.33, 0, 0.2, "square", 1, 0, 0);
+  //A
+  soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
+  //High D
+  soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
+}
