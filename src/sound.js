@@ -96,33 +96,32 @@ Sound.prototype.backgroundMusic = function() {
   }
 
   const tick = (l) => soundEffect(40, 0, .04, "square", 4, 0, l / s, pb);
+  const tock = (l) => soundEffect(80, 0, .04, "square", 4, 0, l / s, pb);
 
   const B = 35+12;
   const E = 40+12;
   const D = 38+12;
   
-  g(0, E);  
   tick(0);
+  g(0, E);  
   g(1, E);
-  tick(1);
+
+  tock(2);
   g(2, D);
-  tick(2);
   g(3, E);
-  tick(3);
+  
   tick(4);
   g(5, B);
-  tick(5);
+  tock(6);
   g(6, E);
-  tick(6);
-  tick(7);
   g(8, D, .8);
   tick(8);
-  tick(9);
-  tick(10);
-  tick(11);
+  
+  tock(10);
+  g(10, E+24);
+  g(12, E+22);
+  g(14, E+20);
   tick(12);
-  tick(13);
-  tick(14);
-  tick(15);
-  tick(16)
+  tock(14);
+  g(16, E+19, .8);
 };
