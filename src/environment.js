@@ -88,15 +88,24 @@ Environment.prototype.drawRoad = function(game) {
   //Mid lanes
   for (let i = 0; i < 63; ++i) {
     const offset = i * (env.width / 63);
-    game.ctx.moveTo(offset, env.horizontAtY);
-    game.ctx.lineTo(
-      pointAtY(
-        env.focalPoint,
-        { x: offset, y: env.horizontAtY },
-        game.canvas.height
-      ).x,
+
+    let lineEnd = pointAtY(
+      env.focalPoint,
+      { x: offset, y: env.horizontAtY },
       game.canvas.height
-    );
+    ).x;
+
+    lineEnd =
+      lineEnd < 0
+        ? 0
+        : lineEnd > game.canvas.width
+          ? game.canvas.width
+          : lineEnd;
+
+    game.ctx.moveTo(offset, env.horizontAtY);
+    game.ctx.lineTo(lineEnd, pointAtX(env.focalPoint,
+      { x: offset, y: env.horizontAtY },
+      lineEnd).y);
   }
   //Right lane
   game.ctx.moveTo(game.canvas.width, game.canvas.height);
@@ -159,4 +168,14 @@ Environment.prototype.drawTrees = function(game) {
   }
 
   this.ticker++;
+};
+
+Environment.prototype.drawTree = function(game, loc, size) {
+  game.ctx.drawImage(
+    game.cache["tree"],
+    loc.x - size / 2 - 100,
+    loc.y - size / 2,
+    size,
+    size
+  );
 };

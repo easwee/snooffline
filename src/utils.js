@@ -27,3 +27,13 @@ function pointAtY(p1, p2, y) {
   const n = p1.y - k * p1.x;
   return { x: (y - n) / k, y: y };
 }
+
+/**
+ * Get point on line at x
+ * Usage: pointAtY({x: 10, y: 20}, {x: 150, y: 250}, y);
+ */
+function pointAtX(p1, p2, x) {
+  const k = (p1.y - p2.y) / (p1.x - p2.x);
+  const n = p1.y - k * p1.x;
+  return { x: x, y: x*k + n };
+}

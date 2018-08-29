@@ -3,9 +3,9 @@ function Cocaine(x, y) {
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
-  this.width = 2;
-  this.height = 2;
-  this.radius = 2;
+  this.width = 1;
+  this.height = 1;
+  this.radius = 1;
   this.speed = 2;
 }
 
