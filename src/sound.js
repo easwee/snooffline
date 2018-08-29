@@ -5,8 +5,10 @@ Sound.prototype.init = function(game) {
     MOVE: 1,
     PICKUP_COCAINE: 2,
     JUMP: 3,
-    BONUS: 4,
+    BONUS: 4
   };
+
+  setInterval(this.backgroundMusic, 4000);
 };
 
 Sound.prototype.playSound = function(sound) {
@@ -30,47 +32,47 @@ Sound.prototype.playSound = function(sound) {
 
 Sound.prototype.jumpSound = function() {
   soundEffect(
-    523.25,       //frequency
-    0.05,         //attack
-    0.2,          //decay
-    "sine",       //waveform
-    3,            //volume
-    0.8,          //pan
-    0,            //wait before playing
-    600,          //pitch bend amount
-    true,         //reverse
-    100,          //random pitch range
-    0,            //dissonance
-    undefined,    //echo array: [delay, feedback, filter]
-    undefined     //reverb array: [duration, decay, reverse?]
+    523.25, //frequency
+    0.05, //attack
+    0.2, //decay
+    "sine", //waveform
+    3, //volume
+    0.8, //pan
+    0, //wait before playing
+    600, //pitch bend amount
+    true, //reverse
+    100, //random pitch range
+    0, //dissonance
+    undefined, //echo array: [delay, feedback, filter]
+    undefined //reverb array: [duration, decay, reverse?]
   );
 };
 
 Sound.prototype.moveSound = function() {
   soundEffect(
-    110,       //frequency
-    0.01,         //attack
-    0.01,          //decay
-    "sine",       //waveform
-    3,            //volume
-    0.8,          //pan
-    0,            //wait before playing
-    600,          //pitch bend amount
-    true,         //reverse
-    100,          //random pitch range
-    0,            //dissonance
-    undefined,    //echo array: [delay, feedback, filter]
-    undefined     //reverb array: [duration, decay, reverse?]
+    110, //frequency
+    0.01, //attack
+    0.01, //decay
+    "sine", //waveform
+    3, //volume
+    0.8, //pan
+    0, //wait before playing
+    600, //pitch bend amount
+    true, //reverse
+    100, //random pitch range
+    0, //dissonance
+    undefined, //echo array: [delay, feedback, filter]
+    undefined //reverb array: [duration, decay, reverse?]
   );
 };
 
 Sound.prototype.pickupSound = function() {
- //D
- soundEffect(midiTable[74].frq, 0, 0.2, "square", 1, 0, 0);
- //A
- soundEffect(midiTable[81].frq, 0, 0.2, "square", 1, 0, 0.1);
- //High D
- soundEffect(midiTable[98].frq, 0, 0.3, "square", 1, 0, 0.2);
+  //D
+  soundEffect(midiTable[74].frq, 0, 0.2, "square", 1, 0, 0);
+  //A
+  soundEffect(midiTable[81].frq, 0, 0.2, "square", 1, 0, 0.1);
+  //High D
+  soundEffect(midiTable[98].frq, 0, 0.3, "square", 1, 0, 0.2);
 };
 
 Sound.prototype.bonusSound = function() {
@@ -80,4 +82,47 @@ Sound.prototype.bonusSound = function() {
   soundEffect(880, 0, 0.2, "square", 1, 0, 0.1);
   //High D
   soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
-}
+};
+
+Sound.prototype.backgroundMusic = function() {
+  
+  const s = 4;
+  const pb = 0;
+  const atk = 0.05;
+  const g = (l, f, d=0.2) => {
+    soundEffect(midiTable[f].frq, atk, d, "square", 1, 0, l / s, pb);
+    soundEffect(midiTable[f+5].frq, atk, d, "square", 1, 0, l / s, pb);  
+    soundEffect(midiTable[f+12].frq, atk, d, "square", 1, 0, l / s, pb);  
+  }
+
+  const tick = (l) => soundEffect(40, 0, .04, "square", 4, 0, l / s, pb);
+
+  const B = 35+12;
+  const E = 40+12;
+  const D = 38+12;
+  
+  g(0, E);  
+  tick(0);
+  g(1, E);
+  tick(1);
+  g(2, D);
+  tick(2);
+  g(3, E);
+  tick(3);
+  tick(4);
+  g(5, B);
+  tick(5);
+  g(6, E);
+  tick(6);
+  tick(7);
+  g(8, D, .8);
+  tick(8);
+  tick(9);
+  tick(10);
+  tick(11);
+  tick(12);
+  tick(13);
+  tick(14);
+  tick(15);
+  tick(16)
+};
