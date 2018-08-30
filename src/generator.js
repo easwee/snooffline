@@ -22,7 +22,8 @@ function Generator(config) {
 
   this.tree = {
     interval: 500,
-    initialX: 350
+    initialX_left: 320,
+    initialX_right: 470
   }
 }
 
@@ -47,10 +48,17 @@ Generator.prototype.init = function(game) {
   }, this.spawn.interval);
 
   this.environmentIntervalHandler = setInterval(() => {
-    this.create(
-      new Tree(this.tree.initialX, game.geometry.environment.horizontAtY),
-      "trees"
-    );
+
+    for(let i = 0; i < 3; i++) {
+      this.create(
+        new Tree(this.tree.initialX_left - i*10, game.geometry.environment.horizontAtY),
+        "trees"
+      );
+      this.create(
+        new Tree(this.tree.initialX_right + i*10, game.geometry.environment.horizontAtY),
+        "trees"
+      );
+    }  
   }, this.tree.interval);
 
   // this.changeIntervalHandler = setInterval(() => {
