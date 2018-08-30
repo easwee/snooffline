@@ -95,8 +95,8 @@ Sound.prototype.backgroundMusic = function() {
     soundEffect(midiTable[f+12].frq, atk, d, "square", 1, 0, l / s, pb);  
   }
 
-  const tick = (l) => soundEffect(40, 0, .04, "square", 4, 0, l / s, pb);
-  const tock = (l) => soundEffect(80, 0, .04, "square", 4, 0, l / s, pb);
+  const tick = (l) => soundEffect(40, 0, .1, "square", 5, 0, l / s, pb);
+  const tock = (l) => soundEffect(80, 0, .1, "square", 5, 0, l / s, pb);
 
   const B = 35+12;
   const E = 40+12;

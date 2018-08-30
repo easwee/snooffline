@@ -1,6 +1,5 @@
 function Environment() {
   this.switch = 0;
-  this.ticker = 0;
   this.numBuildings = 25;
   this.heights = [];
   for (let i = 0; i < this.numBuildings; ++i) {
@@ -34,7 +33,6 @@ Environment.prototype.render = function(game) {
   this.drawBackground(game);
   this.drawCity(game);
   this.drawRoad(game);
-  this.drawTrees(game);
 };
 
 Environment.prototype.drawBackground = function(game) {
@@ -103,9 +101,10 @@ Environment.prototype.drawRoad = function(game) {
           : lineEnd;
 
     game.ctx.moveTo(offset, env.horizontAtY);
-    game.ctx.lineTo(lineEnd, pointAtX(env.focalPoint,
-      { x: offset, y: env.horizontAtY },
-      lineEnd).y);
+    game.ctx.lineTo(
+      lineEnd,
+      pointAtX(env.focalPoint, { x: offset, y: env.horizontAtY }, lineEnd).y
+    );
   }
   //Right lane
   game.ctx.moveTo(game.canvas.width, game.canvas.height);
@@ -127,55 +126,4 @@ Environment.prototype.drawRoad = function(game) {
   game.ctx.lineTo(game.canvas.width, env.horizontAtY);
 
   game.ctx.stroke();
-};
-
-Environment.prototype.drawTrees = function(game) {
-  const env = game.geometry.environment;
-
-  const originLeft = { x: env.horizontLeft.x - 50, y: env.horizontAtY };
-  const originRight = { x: env.horizontRight.x + 50, y: env.horizontAtY };
-
-  if (env.horizontAtY + this.ticker > game.canvas.height) this.ticker = 0;
-
-  for (let i = 0; i < 6; i++) {
-    let treeY = env.horizontAtY + this.ticker + i * 60;
-    if (treeY > game.canvas.height) treeY = 260 - game.canvas.height + treeY;
-
-    const treeLoc = pointAtY(env.focalPoint, env.bottomLeft, treeY);
-    const size = treeY / 5;
-    game.ctx.drawImage(
-      game.cache["tree"],
-      treeLoc.x - size / 2 - 100,
-      treeLoc.y - size / 2,
-      size,
-      size
-    );
-  }
-
-  for (let i = 0; i < 6; i++) {
-    let treeY = env.horizontAtY + this.ticker + i * 60;
-    if (treeY > game.canvas.height) treeY = 260 - game.canvas.height + treeY;
-
-    const treeLoc = pointAtY(env.focalPoint, env.bottomRight, treeY);
-    const size = treeY / 5;
-    game.ctx.drawImage(
-      game.cache["tree"],
-      treeLoc.x - size / 2 + 100,
-      treeLoc.y - size / 2,
-      size,
-      size
-    );
-  }
-
-  this.ticker++;
-};
-
-Environment.prototype.drawTree = function(game, loc, size) {
-  game.ctx.drawImage(
-    game.cache["tree"],
-    loc.x - size / 2 - 100,
-    loc.y - size / 2,
-    size,
-    size
-  );
 };
