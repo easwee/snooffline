@@ -44,12 +44,12 @@ Environment.prototype.drawBackground = function(game) {
 Environment.prototype.drawCity = function(game) {
   this.ctx.strokeStyle = this.buildings.color;
   for (let i = 0; i < this.buildings.count; ++i) {
-    this.drawBuilding(game, i * (30) - 5, this.buildings.heights[i], 30);
-    this.drawBuilding(game, i * (33) + 5, this.buildings.heights[i] + 10, 30);
+    this.drawBuilding(game, i * 30 - 5, this.buildings.heights[i], 30);
+    this.drawBuilding(game, i * 33 + 5, this.buildings.heights[i] + 10, 30);
   }
 };
 
-Environment.prototype.drawScore = function(game) {
+Environment.prototype.drawScore = function(game, context) {
   this.ctx.shadowBlur = 0;
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "30px Arial";

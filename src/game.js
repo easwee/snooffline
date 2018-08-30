@@ -64,8 +64,9 @@ Game.prototype.init = function() {
   this.generator = new Generator();
   this.sound = new Sound();
 
+
   let cached = Promise.all([
-    this.addToCache("cocaine", "src/cocaine.png"),
+    this.addToCache("cocaine", "src/coke.svg"),
     this.addToCache("tree", "src/tree.svg"),
     this.addToCache("player", "src/player.svg")
   ]);

@@ -10,8 +10,6 @@ function Cocaine(x, y) {
 }
 
 Cocaine.prototype.render = function(game) {
-  game.ctx.fillStyle = "red";
-  game.ctx.fillRect(this.x, this.y, this.width, this.height);
   const graphic = game.cache["cocaine"];
   game.ctx.drawImage(graphic, this.x, this.y, this.width, this.height);
 };

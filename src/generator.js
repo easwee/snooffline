@@ -23,12 +23,11 @@ function Generator(config) {
   this.tree = {
     interval: 500,
     initialX: 350
-  }
+  };
 }
 
 Generator.prototype.init = function(game) {
   this.spawn.lastPosition = game.canvas.width / 2;
-
   this.spawnIntervalHandler = setInterval(() => {
     this.spawn.lastPosition += this.spawn.direction * 10;
     if (

@@ -35,5 +35,17 @@ function pointAtY(p1, p2, y) {
 function pointAtX(p1, p2, x) {
   const k = (p1.y - p2.y) / (p1.x - p2.x);
   const n = p1.y - k * p1.x;
-  return { x: x, y: x*k + n };
+  return { x: x, y: x * k + n };
+}
+
+/**
+ * Set a single pixel on image data
+ * Usage: setPixel(imageData, 11, 12, 255, 255, 255, 1); // white pixel at x:11, y:12
+ */
+function setPixel(imageData, x, y, r, g, b, a) {
+  index = (x + y * imageData.width) * 4;
+  imageData.data[index + 0] = r;
+  imageData.data[index + 1] = g;
+  imageData.data[index + 2] = b;
+  imageData.data[index + 3] = a;
 }
