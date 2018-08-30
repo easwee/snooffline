@@ -55,7 +55,7 @@ Environment.prototype.drawScore = function(game, context) {
   game.ctx.font = "30px Arial";
   game.ctx.fillText(`Snooffline`, 10, 30);
   game.ctx.font = "20px Arial";
-  game.ctx.fillText(`Score: ${game.player.score}`, 10, 60);
+  game.ctx.fillText(`Amount: ${game.player.score} mg`, 10, 60);
 };
 
 Environment.prototype.drawBuilding = function(game, x, height, width) {

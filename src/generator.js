@@ -112,9 +112,11 @@ Generator.prototype.renderLine = function(game, arrayName) {
   const ctx = game.ctx;
 
   ctx.save();
-  ctx.shadowBlur = 10;
+  ctx.shadowBlur = 20;
   ctx.shadowColor = "white";
   ctx.strokeStyle = "white";
+  ctx.lineCap="round";
+  ctx.lineWidth = 5;
 
   this.items[arrayName].forEach((element, index) => {
     // console.log(element, index);
@@ -149,7 +151,7 @@ Generator.prototype.updateCocaine = function(game, arrayName) {
       collision(element, game.player)
     ) {
       this.destroy(index, arrayName);
-      game.sound.playSound(game.sound.sounds.PICKUP_COCAINE);
+      game.sound.playSound(game.sound.sounds.PICKUP_COCAINE, game.player.score);
       game.player.incrementScore();
     } else if (element.y > game.canvas.height) {
       this.destroy(index, arrayName);
