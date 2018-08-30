@@ -1,4 +1,4 @@
-function Cocaine(x, y) {
+function Cocaine(x, y, previous) {
   this.x = x;
   this.y = y;
   this.startPosX = x;
@@ -7,6 +7,7 @@ function Cocaine(x, y) {
   this.height = 10;
   this.radius = 10;
   this.speed = 2;
+  this.previous = previous;
 }
 
 Cocaine.prototype.render = function(game) {

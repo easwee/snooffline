@@ -11,8 +11,8 @@ function Generator(config) {
 
   this.spawn = {
     direction: -1, //Left -1, Right 1
-    interval: 150, //ms
-    changeInterval: 1000, //ms
+    interval: 20, //ms
+    changeInterval: 100, //ms
     lastPosition: undefined
   };
 
@@ -30,17 +30,34 @@ function Generator(config) {
 Generator.prototype.init = function(game) {
   this.spawn.lastPosition = game.canvas.width / 2;
   this.spawnIntervalHandler = setInterval(() => {
-    this.spawn.lastPosition += this.spawn.direction * 10;
+    this.spawn.lastPosition += this.spawn.direction * 1;
     if (
-      this.spawn.lastPosition < game.geometry.environment.horizontLeft.x + 20 ||
-      this.spawn.lastPosition > game.geometry.environment.horizontRight.x - 20
+      this.spawn.lastPosition <=
+        game.geometry.environment.horizontLeft.x + 20 ||
+      this.spawn.lastPosition >= game.geometry.environment.horizontRight.x - 20
     ) {
       this.spawn.direction = -this.spawn.direction;
     }
+
+    if (
+      this.spawn.lastPosition <=
+      game.geometry.environment.horizontLeft.x + 20
+    ) {
+      this.spawn.lastPosition = game.geometry.environment.horizontLeft.x + 20;
+    }
+
+    if (
+      this.spawn.lastPosition >=
+      game.geometry.environment.horizontRight.x - 20
+    ) {
+      this.spawn.lastPosition = game.geometry.environment.horizontRight.x - 20;
+    }
+
     this.create(
       new Cocaine(
         this.spawn.lastPosition,
-        game.geometry.environment.horizontAtY
+        game.geometry.environment.horizontAtY,
+        this.items["cocaine"][this.items["cocaine"].length - 1]
       ),
       "cocaine"
     );
@@ -67,9 +84,9 @@ Generator.prototype.init = function(game) {
     }
   }, this.decoration.interval);
 
-  // this.changeIntervalHandler = setInterval(() => {
-  //   this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
-  // }, this.spawn.changeInterval);
+  this.changeIntervalHandler = setInterval(() => {
+    this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
+  }, this.spawn.changeInterval);
 };
 
 Generator.prototype.create = function(element, arrayName) {
@@ -77,6 +94,12 @@ Generator.prototype.create = function(element, arrayName) {
 };
 
 Generator.prototype.destroy = function(index, arrayName) {
+  const current = this.items[arrayName][index];
+  const next = this.items[arrayName][index + 1];
+  if (next && current === next.previous) {
+    next.previous = undefined;
+  }
+
   this.items[arrayName].splice(index, 1);
 };
 
@@ -85,25 +108,24 @@ Generator.prototype.render = function(game) {
   this.renderArray(game, "decorations");
 };
 
-
 Generator.prototype.renderLine = function(game, arrayName) {
   const ctx = game.ctx;
+
   ctx.save();
-  
   ctx.shadowBlur = 10;
   ctx.shadowColor = "white";
   ctx.strokeStyle = "white";
-  
+
   this.items[arrayName].forEach((element, index) => {
-   // console.log(element, index);
-    if(index > 0) {
-      const previousElement = this.items[arrayName][index - 1];
+    // console.log(element, index);
+    const previousElement = element.previous;
+    if (previousElement) {
       ctx.beginPath();
       ctx.moveTo(previousElement.x, previousElement.y);
       ctx.lineTo(element.x, element.y);
-      ctx.stroke(); 
+      ctx.stroke();
     }
-    element.render(game);
+    //element.render(game);
   });
   ctx.restore();
 };
