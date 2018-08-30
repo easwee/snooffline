@@ -3,17 +3,17 @@ function Tree(x, y) {
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
-  this.width = 30;
-  this.height = 30;
-  this.speed = 2;
+  this.width = 60;
+  this.height = 60;
+  this.speed = 3;
   this.color = "#4744FF";
-  this.image = "tree";  
+  this.image = "tree";
 }
 
 Tree.prototype.render = function(game) {
   game.ctx.strokeStyle = "red";
   const graphic = game.cache[this.image];
-  game.ctx.drawImage(graphic, this.x, this.y, this.width, this.height);
+  game.ctx.drawImage(graphic, this.x - this.width/2, this.y - this.height/2, this.width, this.height);
 };
 
 Tree.prototype.update = function(game) {
