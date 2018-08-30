@@ -81,8 +81,31 @@ Generator.prototype.destroy = function(index, arrayName) {
 };
 
 Generator.prototype.render = function(game) {
-  this.renderArray(game, "cocaine");
+  this.renderLine(game, "cocaine");
   this.renderArray(game, "decorations");
+};
+
+
+Generator.prototype.renderLine = function(game, arrayName) {
+  const ctx = game.ctx;
+  ctx.save();
+  
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "white";
+  ctx.strokeStyle = "white";
+  
+  this.items[arrayName].forEach((element, index) => {
+   // console.log(element, index);
+    if(index > 0) {
+      const previousElement = this.items[arrayName][index - 1];
+      ctx.beginPath();
+      ctx.moveTo(previousElement.x, previousElement.y);
+      ctx.lineTo(element.x, element.y);
+      ctx.stroke(); 
+    }
+    element.render(game);
+  });
+  ctx.restore();
 };
 
 Generator.prototype.renderArray = function(game, arrayName) {
@@ -90,6 +113,7 @@ Generator.prototype.renderArray = function(game, arrayName) {
     element.render(game);
   });
 };
+
 Generator.prototype.update = function(game) {
   this.updates["cocaine"](game);
   this.updates["decorations"](game);

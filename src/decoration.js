@@ -5,7 +5,7 @@ function Decoration(x, y, image) {
   this.startPosY = y;
   this.width = 100;
   this.height = 100;
-  this.speed = .1;
+  this.speed = 1;
   this.color = "#4744FF";
   this.image = image;
 }

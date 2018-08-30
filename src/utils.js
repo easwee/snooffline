@@ -23,6 +23,7 @@ function collision(c1, c2) {
  * Usage: pointAtY({x: 10, y: 20}, {x: 150, y: 250}, y);
  */
 function pointAtY(p1, p2, y) {
+  if((p1.x - p2.x) === 0) return {x: p1.x, y: y};
   const k = (p1.y - p2.y) / (p1.x - p2.x);
   const n = p1.y - k * p1.x;
   return { x: (y - n) / k, y: y };
@@ -33,9 +34,11 @@ function pointAtY(p1, p2, y) {
  * Usage: pointAtY({x: 10, y: 20}, {x: 150, y: 250}, y);
  */
 function pointAtX(p1, p2, x) {
-  const k = (p1.y - p2.y) / (p1.x - p2.x);
-  const n = p1.y - k * p1.x;
-  return { x: x, y: x * k + n };
+  
+    const k = (p1.y - p2.y) / (p1.x - p2.x);
+    const n = p1.y - k * p1.x;
+    return { x: x, y: x * k + n };
+  
 }
 
 /**

@@ -41,7 +41,6 @@ Player.prototype.render = function(game) {
 
 Player.prototype.incrementScore = function(game) {
   if (!this.didJump) {
-    console.log("incrementing, did jump is:", this.didJump);
     this.score++;
   }
 };
