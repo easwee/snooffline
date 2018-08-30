@@ -52,10 +52,12 @@ Environment.prototype.drawCity = function(game) {
 Environment.prototype.drawScore = function(game, context) {
   this.ctx.shadowBlur = 0;
   game.ctx.fillStyle = this.lineColor;
-  game.ctx.font = "30px Arial";
-  game.ctx.fillText(`Snooffline`, 10, 30);
-  game.ctx.font = "20px Arial";
-  game.ctx.fillText(`Amount: ${game.player.score} mg`, 10, 60);
+  game.ctx.font = "22px monospace";
+  game.ctx.textBaseline = "middle";
+  game.ctx.textAlign = "center";
+  game.ctx.fillText(`-snooffline-`, this.canvas.width / 2, 30);
+  game.ctx.font = "14px monospace";
+  game.ctx.fillText(`${game.player.score} mg`, this.canvas.width / 2, 60);
 };
 
 Environment.prototype.drawBuilding = function(game, x, height, width) {
