@@ -415,7 +415,7 @@ function soundEffect(
     //timeout of 2 seconds, which should be enough for most sound 
     //effects. Override this in the `soundEffect` parameters if you
     //need a longer sound
-    node.stop(actx.currentTime + wait + 2);
+    node.stop(actx.currentTime + wait + 1);
   }
 }
 

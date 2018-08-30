@@ -68,9 +68,9 @@ Sound.prototype.moveSound = function() {
 
 Sound.prototype.pickupSound = function(data) {
   //D
-  soundEffect(midiTable[74-36].frq + data/2, 0.1, 0.2, "sine", 2, 0, 0);
+  soundEffect(midiTable[74-36].frq + data/5, 0.1, 0.2, "sine", 2, 0, 0);
   //A
-  soundEffect(midiTable[81-36].frq + data/2, 0.1, 0.2, "sine", 2, 0, 0.1);
+  soundEffect(midiTable[81-36].frq + data/8, 0.1, 0.2, "sine", 2, 0, 0.1);
 };
 
 Sound.prototype.bonusSound = function() {
