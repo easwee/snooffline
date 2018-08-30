@@ -32,17 +32,13 @@ Environment.prototype.renderStatic = function(game) {
 Environment.prototype.render = function(game) {
   game.ctx.drawImage(this.canvas, 0, 0);
   this.drawRoadLines(game);
+  this.drawScore(game);
 };
 
 Environment.prototype.drawBackground = function(game) {
   const env = game.geometry.environment;
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0, 0, env.width, env.height);
-  this.ctx.fillStyle = this.lineColor;
-  this.ctx.font = "30px Arial";
-  this.ctx.fillText(`Snooffline`, 10, 30);
-  this.ctx.font = "20px Arial";
-  this.ctx.fillText(`Score: ${game.player.score}`, 10, 60);
 };
 
 Environment.prototype.drawCity = function(game) {
@@ -50,6 +46,15 @@ Environment.prototype.drawCity = function(game) {
   for (let i = 0; i < this.buildings.count; ++i) {
     this.drawBuilding(game, i * (30 + 5), this.buildings.heights[i], 30);
   }
+};
+
+Environment.prototype.drawScore = function(game) {
+  this.ctx.shadowBlur = 0;
+  game.ctx.fillStyle = this.lineColor;
+  game.ctx.font = "30px Arial";
+  game.ctx.fillText(`Snooffline`, 10, 30);
+  game.ctx.font = "20px Arial";
+  game.ctx.fillText(`Score: ${game.player.score}`, 10, 60);
 };
 
 Environment.prototype.drawBuilding = function(game, x, height, width) {
@@ -118,6 +123,7 @@ Environment.prototype.drawRoad = function(game) {
 };
 
 Environment.prototype.drawRoadLines = function(game) {
+  game.ctx.save();
   const env = game.geometry.environment;
   const numLines = 20;
   const tick = game.time.now % numLines;
@@ -135,4 +141,5 @@ Environment.prototype.drawRoadLines = function(game) {
     game.ctx.lineTo(end.x, end.y);
   }
   game.ctx.stroke();
+  game.ctx.restore();
 };
