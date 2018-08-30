@@ -2,7 +2,7 @@ function Environment() {
   this.switch = 0;
   this.buildings = {
     color: "#4744FF",
-    count: 25,
+    count: 35,
     heights: []
   };
   this.lineColor = "#9B30FF";
@@ -15,7 +15,7 @@ Environment.prototype.init = function(game) {
   this.canvas.height = game.canvas.height;
 
   for (let i = 0; i < this.buildings.count; ++i) {
-    this.buildings.heights.push(20 + Math.random() * 100);
+    this.buildings.heights.push(15 + Math.random() * 90);
   }
 
   this.renderStatic(game);
@@ -44,7 +44,8 @@ Environment.prototype.drawBackground = function(game) {
 Environment.prototype.drawCity = function(game) {
   this.ctx.strokeStyle = this.buildings.color;
   for (let i = 0; i < this.buildings.count; ++i) {
-    this.drawBuilding(game, i * (30 + 5), this.buildings.heights[i], 30);
+    this.drawBuilding(game, i * (30) - 5, this.buildings.heights[i], 30);
+    this.drawBuilding(game, i * (33) + 5, this.buildings.heights[i] + 10, 30);
   }
 };
 
@@ -132,7 +133,6 @@ Environment.prototype.drawRoadLines = function(game) {
   game.ctx.strokeStyle = this.lineColor;
 
   game.ctx.beginPath();
-  debugger;
   for (let i = 0; i < numLines; ++i) {
     const Y = env.horizontAtY + i * 20 + tick;
     const start = pointAtY(env.focalPoint, env.bottomLeft, Y);
