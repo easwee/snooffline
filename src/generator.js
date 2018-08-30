@@ -58,7 +58,7 @@ Generator.prototype.update = function(game) {
       collision(element, game.player)
     ) {
       this.destroy(index);
-      game.sound.playSound(32, 0.1, game.config.mute);
+      game.sound.playSound(game.sound.sounds.PICKUP_COCAINE);
       game.player.incrementScore();
     } else if (element.y > game.canvas.height) {
       this.destroy(index);

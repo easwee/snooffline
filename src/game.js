@@ -2,7 +2,7 @@ function Game(config) {
   this.config = {
     canvasId: config || "display",
     fps: config || 60,
-    mute: true,
+    mute: false,
     gravity: 0.5,
     friction: 0.5,
     jumpImpulse: 10,
@@ -54,7 +54,7 @@ Game.prototype.init = function() {
     },
     environment: this.calculateEnvironment({
       x: this.canvas.width / 2,
-      y: 250
+      y: 150
     })
   };
 
@@ -82,7 +82,7 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
   const env = {
     width: this.canvas.width,
     height: this.canvas.height,
-    horizontAtY: this.canvas.height / 2,
+    horizontAtY: this.canvas.height / 3,
     focalPoint,
     bottomLeft: { x: 0, y: this.canvas.height },
     bottomRight: { x: this.canvas.width, y: this.canvas.height }
