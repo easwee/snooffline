@@ -126,7 +126,6 @@ Environment.prototype.drawRoadLines = function(game) {
   game.ctx.strokeStyle = this.lineColor;
 
   game.ctx.beginPath();
-  debugger;
   for (let i = 0; i < numLines; ++i) {
     const Y = env.horizontAtY + i * 20 + tick;
     const start = pointAtY(env.focalPoint, env.bottomLeft, Y);
