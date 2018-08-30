@@ -21,9 +21,9 @@ function Generator(config) {
   this.environmentIntervalHandler = null;
 
   this.decoration = {
-    interval: 2500,
-    initialX_left: 320,
-    initialX_right: 470
+    interval: 2000,
+    initialX_left: 300,
+    initialX_right: 500
   };
 }
 
@@ -68,16 +68,14 @@ Generator.prototype.init = function(game) {
       this.create(
         new Decoration(
           this.decoration.initialX_left - i * 10,
-          game.geometry.environment.horizontAtY,
-          "cards"
+          game.geometry.environment.horizontAtY
         ),
         "decorations"
       );
       this.create(
         new Decoration(
           this.decoration.initialX_right + i * 10,
-          game.geometry.environment.horizontAtY,
-          "dice"
+          game.geometry.environment.horizontAtY
         ),
         "decorations"
       );
@@ -115,7 +113,7 @@ Generator.prototype.renderLine = function(game, arrayName) {
   ctx.shadowBlur = 20;
   ctx.shadowColor = "white";
   ctx.strokeStyle = "white";
-  ctx.lineCap="round";
+  ctx.lineCap = "round";
   ctx.lineWidth = 5;
 
   this.items[arrayName].forEach((element, index) => {

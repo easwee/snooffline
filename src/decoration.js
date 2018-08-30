@@ -3,24 +3,26 @@ function Decoration(x, y, image) {
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
-  this.width = 100;
-  this.height = 100;
+  this.width = 200;
+  this.height = 200;
   this.speed = 1;
   this.color = "#4744FF";
-  this.image = image;
+  this.images = ["girl1", "cards", "dice"];
+  this.image = this.images[Math.floor(Math.random() * 3)];
 }
 
 Decoration.prototype.render = function(game) {
   game.ctx.strokeStyle = "red";
   const graphic = game.cache[this.image];
-  
-  const scale = this.y/game.geometry.environment.height
+
+  const scale = this.y / game.geometry.environment.height;
+
   game.ctx.drawImage(
     graphic,
-    this.x - this.width*scale / 2,
-    this.y - this.height*scale / 2,
-    this.width*scale,
-    this.height*scale
+    this.x - (this.width * scale) / 2,
+    this.y - (this.height * scale) / 2,
+    this.width * scale,
+    this.height * scale
   );
 
   // X/Y cross for debug
@@ -40,5 +42,5 @@ Decoration.prototype.update = function(game) {
     env.focalPoint,
     { x: this.startPosX, y: env.horizontAtY },
     this.y
-  ).x;    
+  ).x;
 };
