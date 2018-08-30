@@ -70,6 +70,7 @@ Game.prototype.init = function() {
   ]);
 
   cached.then(() => {
+    this.environment.init(this);
     this.generator.init(this);
     this.player.init(this);
     this.controls.init();
