@@ -18,8 +18,15 @@ Player.prototype.init = function(game) {
 Player.prototype.render = function(game) {
   const player = game.geometry.player;
 
-  game.ctx.fillStyle = "red";
-  game.ctx.fillRect(
+  // game.ctx.fillStyle = "red";
+  // game.ctx.fillRect(
+  //   ~~(this.x - player.width / 2),
+  //   ~~(this.y - player.height / 2),
+  //   player.width,
+  //   player.height
+  // );
+  game.ctx.drawImage(
+    game.cache["player"],
     ~~(this.x - player.width / 2),
     ~~(this.y - player.height / 2),
     player.width,
@@ -90,5 +97,5 @@ Player.prototype.update = function(game) {
 
 Player.prototype.jump = function(jumpHeight) {
   this.didJump = true;
-  this.velocityY = -jumpHeight;  
+  this.velocityY = -jumpHeight;
 };

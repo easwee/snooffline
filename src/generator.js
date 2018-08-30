@@ -1,7 +1,12 @@
 function Generator(config) {
   this.items = {
-    'cocaine': [],
-    'trees': []
+    cocaine: [],
+    trees: []
+  };
+
+  this.updates = {
+    cocaine: game => this.updateCocaine(game, "cocaine"),
+    trees: game => this.updateTrees(game, "trees")
   };
 
   this.spawn = {
@@ -13,7 +18,12 @@ function Generator(config) {
 
   this.spawnIntervalHandler = null;
   this.changeIntervalHandler = null;
-  this.environmentIntervalHandler = null;  
+  this.environmentIntervalHandler = null;
+
+  this.tree = {
+    interval: 500,
+    initialX: 350
+  }
 }
 
 Generator.prototype.init = function(game) {
@@ -27,21 +37,21 @@ Generator.prototype.init = function(game) {
     ) {
       this.spawn.direction = -this.spawn.direction;
     }
-    this.create(new Cocaine(
-      this.spawn.lastPosition,
-      game.geometry.environment.horizontAtY
-    ), 'cocaine');
+    this.create(
+      new Cocaine(
+        this.spawn.lastPosition,
+        game.geometry.environment.horizontAtY
+      ),
+      "cocaine"
+    );
   }, this.spawn.interval);
 
   this.environmentIntervalHandler = setInterval(() => {
     this.create(
-      new Tree(
-        this.spawn.lastPosition,
-        game.geometry.environment.horizontAtY
-      ),
-      'trees'
+      new Tree(this.tree.initialX, game.geometry.environment.horizontAtY),
+      "trees"
     );
-  }, this.spawn.interval);
+  }, this.tree.interval);
 
   // this.changeIntervalHandler = setInterval(() => {
   //   this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
@@ -57,8 +67,8 @@ Generator.prototype.destroy = function(index, arrayName) {
 };
 
 Generator.prototype.render = function(game) {
-  this.renderArray(game, 'cocaine');
-  this.renderArray(game, 'trees');
+  this.renderArray(game, "cocaine");
+  this.renderArray(game, "trees");
 };
 
 Generator.prototype.renderArray = function(game, arrayName) {
@@ -67,11 +77,12 @@ Generator.prototype.renderArray = function(game, arrayName) {
   });
 };
 Generator.prototype.update = function(game) {
-  this.updateArray(game, 'cocaine');
-}
+  this.updates["cocaine"](game);
+  this.updates["trees"](game);
+};
 
-Generator.prototype.updateArray = function(game, arrayName) {
-  this.items[arrayName].forEach((element, index) => {    
+Generator.prototype.updateCocaine = function(game, arrayName) {
+  this.items[arrayName].forEach((element, index) => {
     if (
       !game.player.didJump &&
       element.y <= game.player.y &&
@@ -81,6 +92,16 @@ Generator.prototype.updateArray = function(game, arrayName) {
       game.sound.playSound(game.sound.sounds.PICKUP_COCAINE);
       game.player.incrementScore();
     } else if (element.y > game.canvas.height) {
+      this.destroy(index, arrayName);
+    } else {
+      element.update(game);
+    }
+  });
+};
+
+Generator.prototype.updateTrees = function(game, arrayName) {
+  this.items[arrayName].forEach((element, index) => {
+    if (element.y > game.canvas.height) {
       this.destroy(index, arrayName);
     } else {
       element.update(game);
