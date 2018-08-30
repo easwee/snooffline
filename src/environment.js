@@ -6,19 +6,18 @@ function Environment() {
     heights: []
   };
   this.lineColor = "#9B30FF";
-  this.canvas = document.createElement("canvas");
-  this.ctx = this.canvas.getContext("2d");
 }
 
 Environment.prototype.init = function(game) {
   this.canvas = document.createElement("canvas");
+  this.ctx = this.canvas.getContext("2d");
   this.canvas.width = game.canvas.width;
   this.canvas.height = game.canvas.height;
 
   for (let i = 0; i < this.buildings.count; ++i) {
     this.buildings.heights.push(20 + Math.random() * 100);
   }
-  debugger;
+
   this.renderStatic(game);
 };
 
@@ -31,16 +30,14 @@ Environment.prototype.renderStatic = function(game) {
 };
 
 Environment.prototype.render = function(game) {
-  debugger;
   game.ctx.drawImage(this.canvas, 0, 0);
   this.drawRoadLines(game);
 };
 
 Environment.prototype.drawBackground = function(game) {
   const env = game.geometry.environment;
-  debugger;
-  game.ctx.fillStyle = "black";
-  game.ctx.fillRect(0, 0, env.width, env.height);
+  this.ctx.fillStyle = "black";
+  this.ctx.fillRect(0, 0, env.width, env.height);
   this.ctx.fillStyle = this.lineColor;
   this.ctx.font = "30px Arial";
   this.ctx.fillText(`Snooffline`, 10, 30);
@@ -78,13 +75,14 @@ Environment.prototype.drawBuilding = function(game, x, height, width) {
 
 Environment.prototype.drawRoad = function(game) {
   const env = game.geometry.environment;
-  game.ctx.shadowBlur = 10;
-  game.ctx.shadowColor = "white";
-  game.ctx.strokeStyle = this.lineColor;
-  game.ctx.beginPath();
+  const ctx = this.ctx;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "white";
+  ctx.strokeStyle = this.lineColor;
+  ctx.beginPath();
   //Left lane
-  game.ctx.moveTo(0, game.canvas.height);
-  game.ctx.lineTo(env.horizontLeft.x, env.horizontLeft.y);
+  ctx.moveTo(0, game.canvas.height);
+  ctx.lineTo(env.horizontLeft.x, env.horizontLeft.y);
   //Mid lanes
   for (let i = 0; i < 63; ++i) {
     const offset = i * (env.width / 63);
@@ -102,38 +100,33 @@ Environment.prototype.drawRoad = function(game) {
           ? game.canvas.width
           : lineEnd;
 
-    game.ctx.moveTo(offset, env.horizontAtY);
-    game.ctx.lineTo(
+    ctx.moveTo(offset, env.horizontAtY);
+    ctx.lineTo(
       lineEnd,
       pointAtX(env.focalPoint, { x: offset, y: env.horizontAtY }, lineEnd).y
     );
   }
   //Right lane
-  game.ctx.moveTo(game.canvas.width, game.canvas.height);
-  game.ctx.lineTo(env.horizontRight.x, env.horizontRight.y);
-
-  //Road lines
-  // const numLines = 20;
-  // const tick = game.time.now % numLines;
-  // for (let i = 0; i < numLines; ++i) {
-  //   const Y = env.horizontAtY + i * 20 + tick;
-  //   const start = pointAtY(env.focalPoint, env.bottomLeft, Y);
-  //   const end = pointAtY(env.focalPoint, env.bottomRight, Y);
-  //   game.ctx.moveTo(start.x, start.y);
-  //   game.ctx.lineTo(end.x, end.y);
-  // }
+  ctx.moveTo(game.canvas.width, game.canvas.height);
+  ctx.lineTo(env.horizontRight.x, env.horizontRight.y);
 
   //Horizon
-  game.ctx.moveTo(0, env.horizontAtY);
-  game.ctx.lineTo(game.canvas.width, env.horizontAtY);
+  ctx.moveTo(0, env.horizontAtY);
+  ctx.lineTo(game.canvas.width, env.horizontAtY);
 
-  game.ctx.stroke();
+  ctx.stroke();
 };
 
 Environment.prototype.drawRoadLines = function(game) {
   const env = game.geometry.environment;
   const numLines = 20;
   const tick = game.time.now % numLines;
+  game.ctx.shadowBlur = 10;
+  game.ctx.shadowColor = "white";
+  game.ctx.strokeStyle = this.lineColor;
+
+  game.ctx.beginPath();
+  debugger;
   for (let i = 0; i < numLines; ++i) {
     const Y = env.horizontAtY + i * 20 + tick;
     const start = pointAtY(env.focalPoint, env.bottomLeft, Y);
@@ -141,4 +134,5 @@ Environment.prototype.drawRoadLines = function(game) {
     game.ctx.moveTo(start.x, start.y);
     game.ctx.lineTo(end.x, end.y);
   }
+  game.ctx.stroke();
 };

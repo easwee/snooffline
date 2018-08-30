@@ -110,6 +110,7 @@ Game.prototype.loop = function(time) {
   }
   this.update();
   this.render();
+
   requestAnimationFrame(this.loop.bind(this));
 };
 
