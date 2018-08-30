@@ -1,13 +1,13 @@
-function Decoration(x, y) {
+function Decoration(x, y, image) {
   this.x = x;
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
   this.width = 100;
   this.height = 100;
-  this.speed = .4;
+  this.speed = .1;
   this.color = "#4744FF";
-  this.image = "girl1";
+  this.image = image;
 }
 
 Decoration.prototype.render = function(game) {

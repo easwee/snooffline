@@ -21,7 +21,7 @@ function Generator(config) {
   this.environmentIntervalHandler = null;
 
   this.decoration = {
-    interval: 500,
+    interval: 2500,
     initialX_left: 320,
     initialX_right: 470
   }
@@ -48,14 +48,14 @@ Generator.prototype.init = function(game) {
   }, this.spawn.interval);
 
   this.environmentIntervalHandler = setInterval(() => {
-
-    for(let i = 0; i < 3; i++) {
+    
+    for(let i = 0; i < 1; i++) {
       this.create(
-        new Decoration(this.decoration.initialX_left - i*10, game.geometry.environment.horizontAtY),
+        new Decoration(this.decoration.initialX_left - i*10, game.geometry.environment.horizontAtY, 'cards'),
         "decorations"
       );
       this.create(
-        new Decoration(this.decoration.initialX_right + i*10, game.geometry.environment.horizontAtY),
+        new Decoration(this.decoration.initialX_right + i*10, game.geometry.environment.horizontAtY, 'dice'),
         "decorations"
       );
     }  
