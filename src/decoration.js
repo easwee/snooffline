@@ -1,16 +1,16 @@
-function Tree(x, y) {
+function Decoration(x, y) {
   this.x = x;
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
   this.width = 100;
   this.height = 100;
-  this.speed = 1;
+  this.speed = .4;
   this.color = "#4744FF";
-  this.image = "tree";
+  this.image = "girl1";
 }
 
-Tree.prototype.render = function(game) {
+Decoration.prototype.render = function(game) {
   game.ctx.strokeStyle = "red";
   const graphic = game.cache[this.image];
   
@@ -33,7 +33,7 @@ Tree.prototype.render = function(game) {
   // game.ctx.stroke();
 };
 
-Tree.prototype.update = function(game) {
+Decoration.prototype.update = function(game) {
   const env = game.geometry.environment;
   this.y += this.speed;
   this.x = pointAtY(

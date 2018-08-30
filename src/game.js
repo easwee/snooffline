@@ -66,7 +66,7 @@ Game.prototype.init = function() {
 
   let cached = Promise.all([
     this.addToCache("cocaine", "src/cocaine.png"),
-    this.addToCache("tree", "src/tree.svg"),
+    this.addToCache("girl1", "src/girl_1.svg"),
     this.addToCache("player", "src/player.svg")
   ]);
 
