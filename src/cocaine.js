@@ -11,6 +11,11 @@ function Cocaine(x, y) {
 
 Cocaine.prototype.render = function(game) {
   const graphic = game.cache["cocaine"];
+  game.ctx.beginPath();
+
+  game.ctx.strokeStyle = "green";
+  game.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+  game.ctx.stroke();
   game.ctx.drawImage(graphic, this.x, this.y, this.width, this.height);
 };
 

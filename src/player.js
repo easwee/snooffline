@@ -4,7 +4,7 @@ function Player() {
   this.velocityY = 0;
   this.velocityX = 0;
   this.acceleration = 1;
-  this.radius = 16;
+  this.radius = 5;
   this.score = 0;
   this.didJump = false;
 }
@@ -25,10 +25,15 @@ Player.prototype.render = function(game) {
   //   player.width,
   //   player.height
   // );
+  game.ctx.beginPath();
+
+  game.ctx.strokeStyle = "green";
+  game.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+  game.ctx.stroke();
   game.ctx.drawImage(
     game.cache["player"],
-    ~~(this.x - player.width / 2),
-    ~~(this.y - player.height / 2),
+    ~~this.x,
+    ~~(this.y - player.height),
     player.width,
     player.height
   );
