@@ -48,8 +48,8 @@ Game.prototype.init = function() {
     player: {
       x: 400,
       y: 200,
-      width: 32,
-      height: 32,
+      width: 50,
+      height: 90,
       radius: 16
     },
     environment: this.calculateEnvironment({
@@ -66,7 +66,8 @@ Game.prototype.init = function() {
 
   let cached = Promise.all([
     this.addToCache("cocaine", "src/cocaine.png"),
-    this.addToCache("tree", "src/tree.svg")
+    this.addToCache("tree", "src/tree.svg"),
+    this.addToCache("player", "src/player.svg")
   ]);
 
   cached.then(() => {
