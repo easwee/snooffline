@@ -7,8 +7,7 @@ Sound.prototype.init = function(game) {
     JUMP: 3,
     BONUS: 4
   };
-
-  setInterval(this.backgroundMusic, 4000);
+  this.startMusic();
 };
 
 Sound.prototype.playSound = function(sound, data) {
@@ -28,6 +27,14 @@ Sound.prototype.playSound = function(sound, data) {
     default:
       console.warn("No such sound:", sound);
   }
+};
+
+Sound.prototype.startMusic = function() {
+  this.music = setInterval(this.backgroundMusic, 4000);
+};
+
+Sound.prototype.stopMusic = function() {
+  clearInterval(this.music);
 };
 
 Sound.prototype.jumpSound = function() {
@@ -68,9 +75,25 @@ Sound.prototype.moveSound = function() {
 
 Sound.prototype.pickupSound = function(data) {
   //D
-  soundEffect(midiTable[34].frq + data/5, 0.0002, 0.0004, "triangle", 1, 0, 0);
+  soundEffect(
+    midiTable[34].frq + data / 5,
+    0.0002,
+    0.0004,
+    "triangle",
+    1,
+    0,
+    0
+  );
   //A
-  soundEffect(midiTable[46].frq + data/8, 0.0002, 0.0004, "triangle", 1, 0, 0);
+  soundEffect(
+    midiTable[46].frq + data / 8,
+    0.0002,
+    0.0004,
+    "triangle",
+    1,
+    0,
+    0
+  );
 };
 
 Sound.prototype.bonusSound = function() {
@@ -82,38 +105,38 @@ Sound.prototype.bonusSound = function() {
   soundEffect(1174.66, 0, 0.3, "square", 1, 0, 0.2);
 };
 
-Sound.prototype.backgroundMusic = function() {  
+Sound.prototype.backgroundMusic = function() {
   const s = 4;
   const pb = 0;
   const atk = 0.05;
-  const g = (l, f, d=0.2) => {
+  const g = (l, f, d = 0.2) => {
     soundEffect(midiTable[f].frq, atk, d, "triangle", 1, 0, l / s, pb);
-    soundEffect(midiTable[f+7].frq, atk, d, "triangle", 1, 0, l / s, pb);  
-    soundEffect(midiTable[f+12].frq, atk, d, "triangle", 1, 0, l / s, pb);  
-  }
+    soundEffect(midiTable[f + 7].frq, atk, d, "triangle", 1, 0, l / s, pb);
+    soundEffect(midiTable[f + 12].frq, atk, d, "triangle", 1, 0, l / s, pb);
+  };
 
-  const tick = (l) => soundEffect(40, 0, .1, "triangle", 15, 0, l / s, pb);
-  const tock = (l) => soundEffect(80, 0, .1, "triangle", 15, 0, l / s, pb);
+  const tick = l => soundEffect(40, 0, 0.1, "triangle", 15, 0, l / s, pb);
+  const tock = l => soundEffect(80, 0, 0.1, "triangle", 15, 0, l / s, pb);
 
-  const B = 35+12;
-  const E = 40+12;
-  const D = 38+12;
-  
+  const B = 35 + 12;
+  const E = 40 + 12;
+  const D = 38 + 12;
+
   tick(0);
-  g(0, E);  
+  g(0, E);
   g(1, E);
 
   tock(2);
   g(2, D);
   g(3, E);
-  
+
   tick(4);
   g(5, B);
   tock(6);
   g(6, E);
-  g(7, D, .8);
+  g(7, D, 0.8);
   tick(8);
-  
+
   tock(10);
   tick(12);
   tock(14);

@@ -30,6 +30,7 @@ function Generator(config) {
 Generator.prototype.init = function(game) {
   this.spawn.lastPosition = game.canvas.width / 2;
   this.spawnIntervalHandler = setInterval(() => {
+    if (game.paused) return;
     this.spawn.lastPosition += this.spawn.direction * 1;
     if (
       this.spawn.lastPosition <=
@@ -64,6 +65,7 @@ Generator.prototype.init = function(game) {
   }, this.spawn.interval);
 
   this.environmentIntervalHandler = setInterval(() => {
+    if (game.paused) return;
     for (let i = 0; i < 1; i++) {
       this.create(
         new Decoration(
@@ -83,6 +85,7 @@ Generator.prototype.init = function(game) {
   }, this.decoration.interval);
 
   this.changeIntervalHandler = setInterval(() => {
+    if (game.paused) return;
     this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
   }, this.spawn.changeInterval);
 };

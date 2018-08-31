@@ -49,7 +49,7 @@ Environment.prototype.drawCity = function(game) {
   }
 };
 
-Environment.prototype.drawScore = function(game, context) {
+Environment.prototype.drawScore = function(game) {
   this.ctx.shadowBlur = 0;
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "22px monospace";
@@ -58,6 +58,14 @@ Environment.prototype.drawScore = function(game, context) {
   game.ctx.fillText(`-snooffline-`, this.canvas.width / 2, 30);
   game.ctx.font = "14px monospace";
   game.ctx.fillText(`${game.player.score} mg`, this.canvas.width / 2, 60);
+};
+
+Environment.prototype.drawPause = function(game) {
+  game.ctx.fillStyle = "black";
+  game.ctx.fillRect(this.canvas.width / 2 - 200, 10, 400, 30);
+  game.ctx.fillStyle = this.lineColor;
+  game.ctx.font = "22px monospace";
+  game.ctx.fillText(`-paused-press-P-to-continue-`, this.canvas.width / 2, 30);
 };
 
 Environment.prototype.drawBuilding = function(game, x, height, width) {

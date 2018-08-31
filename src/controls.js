@@ -14,19 +14,35 @@ function Controls() {
   };
 }
 
-Controls.prototype.init = function() {
+Controls.prototype.init = function(game) {
   window.addEventListener(
     "keyup",
     event => {
+      if (event.keyCode === ENUMS.PAUSE || event.keyCode === ENUMS.P) {
+        this.handleGamePause();
+        return;
+      }
+
       this.onKeyup(event);
     },
     false
   );
+
   window.addEventListener(
     "keydown",
     event => {
       this.onKeydown(event);
+      console.log(event.keyCode);
     },
     false
   );
+
+  this.handleGamePause = event => {
+    if (game.paused) {
+      game.sound.startMusic();
+    } else {
+      game.sound.stopMusic();
+    }
+    game.paused = !game.paused;
+  };
 };

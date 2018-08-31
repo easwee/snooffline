@@ -19,6 +19,8 @@ function Game(config) {
   };
 
   this.cache = {};
+
+  this.paused = false;
 }
 
 Game.prototype.addToCache = async function(id, graphicSrc) {
@@ -58,6 +60,11 @@ Game.prototype.init = function() {
     })
   };
 
+  this.windowBlurHandler = window.onblur = () => {
+    this.paused = true;
+    this.sound.stopMusic();
+  };
+
   this.environment = new Environment();
   this.controls = new Controls();
   this.player = new Player();
@@ -76,7 +83,7 @@ Game.prototype.init = function() {
     this.environment.init(this);
     this.generator.init(this);
     this.player.init(this);
-    this.controls.init();
+    this.controls.init(this);
     this.sound.init();
     this.loop();
   });
@@ -102,17 +109,21 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
 };
 
 Game.prototype.loop = function(time) {
-  var t = this.time;
+  console.log("Loop paused: ", this.paused);
+  if (!this.paused) {
+    var t = this.time;
 
-  t.now = time;
-  t.delta = t.now - t.then;
+    t.now = time;
+    t.delta = t.now - t.then;
 
-  if (t.delta > t.interval) {
-    t.then = t.now - (t.delta % t.interval);
+    if (t.delta > t.interval) {
+      t.then = t.now - (t.delta % t.interval);
+    }
+    this.update();
+    this.render();
+  } else {
+    this.renderPause();
   }
-  this.update();
-  this.render();
-
   requestAnimationFrame(this.loop.bind(this));
 };
 
@@ -122,6 +133,11 @@ Game.prototype.render = function() {
   this.environment.render(game);
   this.generator.render(game);
   this.player.render(game);
+};
+
+Game.prototype.renderPause = function() {
+  var game = this;
+  this.environment.drawPause(game);
 };
 
 Game.prototype.update = function(delta) {
