@@ -109,7 +109,6 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
 };
 
 Game.prototype.loop = function(time) {
-  console.log("Loop paused: ", this.paused);
   if (!this.paused) {
     var t = this.time;
 

@@ -13,7 +13,8 @@ function Generator(config) {
     direction: -1, //Left -1, Right 1
     interval: 20, //ms
     changeInterval: 100, //ms
-    lastPosition: undefined
+    lastPosition: undefined,
+    edgeOffset: 20
   };
 
   this.spawnIntervalHandler = null;
@@ -34,24 +35,27 @@ Generator.prototype.init = function(game) {
     this.spawn.lastPosition += this.spawn.direction * 1;
     if (
       this.spawn.lastPosition <=
-        game.geometry.environment.horizontLeft.x + 20 ||
-      this.spawn.lastPosition >= game.geometry.environment.horizontRight.x - 20
+        game.geometry.environment.horizontLeft.x + this.spawn.edgeOffset ||
+      this.spawn.lastPosition >=
+        game.geometry.environment.horizontRight.x - this.spawn.edgeOffset
     ) {
       this.spawn.direction = -this.spawn.direction;
     }
 
     if (
       this.spawn.lastPosition <=
-      game.geometry.environment.horizontLeft.x + 20
+      game.geometry.environment.horizontLeft.x + this.spawn.edgeOffset
     ) {
-      this.spawn.lastPosition = game.geometry.environment.horizontLeft.x + 20;
+      this.spawn.lastPosition =
+        game.geometry.environment.horizontLeft.x + this.spawn.edgeOffset;
     }
 
     if (
       this.spawn.lastPosition >=
-      game.geometry.environment.horizontRight.x - 20
+      game.geometry.environment.horizontRight.x - this.spawn.edgeOffset
     ) {
-      this.spawn.lastPosition = game.geometry.environment.horizontRight.x - 20;
+      this.spawn.lastPosition =
+        game.geometry.environment.horizontRight.x - this.spawn.edgeOffset;
     }
 
     this.create(
@@ -66,21 +70,25 @@ Generator.prototype.init = function(game) {
 
   this.environmentIntervalHandler = setInterval(() => {
     if (game.paused) return;
+
     for (let i = 0; i < 1; i++) {
-      this.create(
-        new Decoration(
-          this.decoration.initialX_left - i * 10,
-          game.geometry.environment.horizontAtY
-        ),
-        "decorations"
-      );
-      this.create(
-        new Decoration(
-          this.decoration.initialX_right + i * 10,
-          game.geometry.environment.horizontAtY
-        ),
-        "decorations"
-      );
+      if (Math.random() > 0.5) {
+        this.create(
+          new Decoration(
+            this.decoration.initialX_left - i * 10,
+            game.geometry.environment.horizontAtY
+          ),
+          "decorations"
+        );
+      } else {
+        this.create(
+          new Decoration(
+            this.decoration.initialX_right + i * 10,
+            game.geometry.environment.horizontAtY
+          ),
+          "decorations"
+        );
+      }
     }
   }, this.decoration.interval);
 
