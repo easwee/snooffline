@@ -32,7 +32,6 @@ Controls.prototype.init = function(game) {
     "keydown",
     event => {
       this.onKeydown(event);
-      console.log(event.keyCode);
     },
     false
   );
