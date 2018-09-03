@@ -75,25 +75,17 @@ Sound.prototype.moveSound = function() {
 
 Sound.prototype.pickupSound = function(data) {
   //D
-  soundEffect(
-    midiTable[34].frq + data / 5,
-    0.0002,
-    0.0004,
-    "triangle",
-    1,
-    0,
-    0
-  );
+  // soundEffect(
+  //   midiTable[34].frq + data / 5,
+  //   0.0002,
+  //   0.0004,
+  //   "triangle",
+  //   1,
+  //   0,
+  //   0
+  // );
   //A
-  soundEffect(
-    midiTable[46].frq + data / 8,
-    0.0002,
-    0.0004,
-    "triangle",
-    1,
-    0,
-    0
-  );
+  soundEffect(midiTable[66].frq + data * 0.1, 0.02, 0.04, "saw", 1, 0, 0);
 };
 
 Sound.prototype.bonusSound = function() {

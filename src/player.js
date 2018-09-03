@@ -18,15 +18,7 @@ Player.prototype.init = function(game) {
 Player.prototype.render = function(game) {
   const player = game.geometry.player;
 
-  // game.ctx.fillStyle = "red";
-  // game.ctx.fillRect(
-  //   ~~(this.x - player.width / 2),
-  //   ~~(this.y - player.height / 2),
-  //   player.width,
-  //   player.height
-  // );
   game.ctx.beginPath();
-
   game.ctx.strokeStyle = "green";
   game.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
   game.ctx.stroke();
