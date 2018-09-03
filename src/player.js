@@ -35,6 +35,10 @@ Player.prototype.incrementScore = function(game) {
   if (!this.didJump) {
     this.score++;
   }
+
+  if(game.config.overdoseLimit <= this.score) {
+    game.hasOverdosed();
+  }
 };
 
 Player.prototype.decrementScore = function(game) {

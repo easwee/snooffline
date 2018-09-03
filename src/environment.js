@@ -76,6 +76,15 @@ Environment.prototype.drawPause = function(game) {
   game.ctx.fillText(`-paused-press-P-to-continue-`, this.canvas.width / 2, 30);
 };
 
+
+Environment.prototype.drawOverdose = function(game) {
+  game.ctx.fillStyle = "black";
+  game.ctx.fillRect(this.canvas.width / 2 - 200, 10, 400, 30);
+  game.ctx.fillStyle = this.lineColor;
+  game.ctx.font = "22px monospace";
+  game.ctx.fillText(`You just overdosed! Dead man.`, this.canvas.width / 2, 30);
+};
+
 Environment.prototype.drawBuilding = function(game, x, height, width) {
   const env = game.geometry.environment;
   var poly = [

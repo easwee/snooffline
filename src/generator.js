@@ -161,7 +161,7 @@ Generator.prototype.updateCocaine = function(game, arrayName) {
     ) {
       this.destroy(index, arrayName);
       game.sound.playSound(game.sound.sounds.PICKUP_COCAINE, game.player.score);
-      game.player.incrementScore();
+      game.player.incrementScore(game);
     } else if (element.y > game.canvas.height) {
       this.destroy(index, arrayName);
     } else {

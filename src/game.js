@@ -8,7 +8,8 @@ function Game(config) {
     jumpImpulse: 10,
     groundPoint: 500,
     leftBorder: 150,
-    rightBorder: 650
+    rightBorder: 650,
+    overdoseLimit: 2000
   };
 
   this.time = {
@@ -19,6 +20,7 @@ function Game(config) {
   };
 
   this.cache = {};
+  this.overdosed = false;
 
   this.paused = false;
 }
@@ -121,7 +123,11 @@ Game.prototype.loop = function(time) {
     this.update();
     this.render();
   } else {
-    this.renderPause();
+    if(this.overdosed) {
+      this.renderOverdose();
+    } else {
+      this.renderPause();
+    }
   }
   requestAnimationFrame(this.loop.bind(this));
 };
@@ -139,8 +145,19 @@ Game.prototype.renderPause = function() {
   this.environment.drawPause(game);
 };
 
+Game.prototype.renderOverdose = function() {
+  var game = this;
+  this.environment.drawOverdose(game);
+};
+
 Game.prototype.update = function(delta) {
   var game = this;
   this.generator.update(game);
   this.player.update(game);
 };
+
+Game.prototype.hasOverdosed = function() {
+  this.paused = true;
+  this.sound.stopMusic();
+  this.overdosed = true;
+}
