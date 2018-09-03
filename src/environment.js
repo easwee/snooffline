@@ -58,6 +58,14 @@ Environment.prototype.drawScore = function(game) {
   game.ctx.fillText(`-snooffline-`, this.canvas.width / 2, 30);
   game.ctx.font = "14px monospace";
   game.ctx.fillText(`${game.player.score} mg`, this.canvas.width / 2, 60);
+
+  //Overdose meter
+  const rating = game.player.score/5;
+  game.ctx.strokeStyle = this.lineColor; 
+  game.ctx.strokeRect(this.canvas.width / 2 - 200, 80, 400, 15);
+
+  game.ctx.fillStyle = "white";
+  game.ctx.fillRect(this.canvas.width / 2 - 200, 80, rating, 15);
 };
 
 Environment.prototype.drawPause = function(game) {
