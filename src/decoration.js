@@ -5,7 +5,7 @@ function Decoration(x, y, image) {
   this.startPosY = y;
   this.width = 200;
   this.height = 200;
-  this.speed = 1;
+  this.speed = 0.1;
   this.color = "#4744FF";
   this.images = ["girl1", "cards", "dice"];
   this.image = this.images[Math.floor(Math.random() * 3)];
@@ -37,7 +37,7 @@ Decoration.prototype.render = function(game) {
 
 Decoration.prototype.update = function(game) {
   const env = game.geometry.environment;
-  this.y += this.speed;
+  this.y += this.speed * game.time.delta;
   this.x = pointAtY(
     env.focalPoint,
     { x: this.startPosX, y: env.horizontAtY },

@@ -57,11 +57,11 @@ Environment.prototype.drawScore = function(game) {
   game.ctx.textAlign = "center";
   game.ctx.fillText(`-snooffline-`, this.canvas.width / 2, 30);
   game.ctx.font = "14px monospace";
-  game.ctx.fillText(`${game.player.score} mg`, this.canvas.width / 2, 60);
+  game.ctx.fillText(`${~~game.player.score} mg`, this.canvas.width / 2, 60);
 
   //Overdose meter
-  const rating = game.player.score/5;
-  game.ctx.strokeStyle = this.lineColor; 
+  const rating = game.player.score / 5;
+  game.ctx.strokeStyle = this.lineColor;
   game.ctx.strokeRect(this.canvas.width / 2 - 200, 80, 400, 15);
 
   game.ctx.fillStyle = "white";
@@ -70,19 +70,30 @@ Environment.prototype.drawScore = function(game) {
 
 Environment.prototype.drawPause = function(game) {
   game.ctx.fillStyle = "black";
-  game.ctx.fillRect(this.canvas.width / 2 - 200, 10, 400, 30);
+  game.ctx.fillRect(0, 10, this.canvas.width, 30);
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "22px monospace";
   game.ctx.fillText(`-paused-press-P-to-continue-`, this.canvas.width / 2, 30);
 };
 
-
 Environment.prototype.drawOverdose = function(game) {
   game.ctx.fillStyle = "black";
-  game.ctx.fillRect(this.canvas.width / 2 - 200, 10, 400, 30);
+  game.ctx.fillRect(0, 10, this.canvas.width, 30);
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "22px monospace";
   game.ctx.fillText(`You just overdosed! Dead man.`, this.canvas.width / 2, 30);
+};
+
+Environment.prototype.drawUnderdose = function(game) {
+  game.ctx.fillStyle = "black";
+  game.ctx.fillRect(0, 10, this.canvas.width, 30);
+  game.ctx.fillStyle = this.lineColor;
+  game.ctx.font = "22px monospace";
+  game.ctx.fillText(
+    `Depression kicked in. Party is over!`,
+    this.canvas.width / 2,
+    30
+  );
 };
 
 Environment.prototype.drawBuilding = function(game, x, height, width) {

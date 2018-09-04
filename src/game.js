@@ -3,13 +3,14 @@ function Game(config) {
     canvasId: config || "display",
     fps: config || 60,
     mute: false,
-    gravity: 0.5,
+    gravity: 0.05,
     friction: 0.5,
-    jumpImpulse: 10,
+    jumpImpulse: 30,
     groundPoint: 500,
     leftBorder: 150,
     rightBorder: 650,
-    overdoseLimit: 2000
+    scoreLimit: 2000,
+    scoreDecrementFactor: 2
   };
 
   this.time = {
@@ -21,6 +22,7 @@ function Game(config) {
 
   this.cache = {};
   this.overdosed = false;
+  this.underdosed = false;
 
   this.paused = false;
 }
@@ -114,17 +116,19 @@ Game.prototype.loop = function(time) {
   if (!this.paused) {
     var t = this.time;
 
-    t.now = time;
+    t.now = time || 0;
     t.delta = t.now - t.then;
 
     if (t.delta > t.interval) {
       t.then = t.now - (t.delta % t.interval);
+      this.update();
+      this.render();
     }
-    this.update();
-    this.render();
   } else {
-    if(this.overdosed) {
+    if (this.overdosed) {
       this.renderOverdose();
+    } else if (this.underdosed) {
+      this.renderUnderdose();
     } else {
       this.renderPause();
     }
@@ -150,6 +154,11 @@ Game.prototype.renderOverdose = function() {
   this.environment.drawOverdose(game);
 };
 
+Game.prototype.renderUnderdose = function() {
+  var game = this;
+  this.environment.drawUnderdose(game);
+};
+
 Game.prototype.update = function(delta) {
   var game = this;
   this.generator.update(game);
@@ -160,4 +169,10 @@ Game.prototype.hasOverdosed = function() {
   this.paused = true;
   this.sound.stopMusic();
   this.overdosed = true;
-}
+};
+
+Game.prototype.hasUnderdosed = function() {
+  this.paused = true;
+  this.sound.stopMusic();
+  this.underdosed = true;
+};

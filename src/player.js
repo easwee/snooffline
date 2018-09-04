@@ -5,7 +5,8 @@ function Player() {
   this.velocityX = 0;
   this.acceleration = 1;
   this.radius = 5;
-  this.score = 0;
+  this.score = 1000;
+  this.totalScore = 0;
   this.didJump = false;
 }
 
@@ -34,15 +35,20 @@ Player.prototype.render = function(game) {
 Player.prototype.incrementScore = function(game) {
   if (!this.didJump) {
     this.score++;
+    this.totalScore++;
   }
 
-  if(game.config.overdoseLimit <= this.score) {
+  if (this.score >= game.config.scoreLimit) {
     game.hasOverdosed();
   }
 };
 
 Player.prototype.decrementScore = function(game) {
-  this.score--;
+  this.score -= game.config.scoreDecrementFactor;
+
+  if (this.score <= 0) {
+    game.hasUnderdosed();
+  }
 };
 
 Player.prototype.update = function(game) {
@@ -70,8 +76,8 @@ Player.prototype.update = function(game) {
   }
 
   if (this.y < game.config.groundPoint) {
-    this.y -= game.config.gravity;
-    this.velocityY += game.config.gravity;
+    this.y -= game.config.gravity * game.time.delta;
+    this.velocityY += game.config.gravity * game.time.delta;
   } else {
     this.y = game.config.groundPoint;
     this.didJump = false;
@@ -90,7 +96,7 @@ Player.prototype.update = function(game) {
     this.x = game.config.rightBorder;
     this.velocityX = 0;
   }
-
+  console.log(this.velocityX, this.velocityY);
   this.x += this.velocityX;
   this.y += this.velocityY;
 };

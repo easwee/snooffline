@@ -22,9 +22,10 @@ function Generator(config) {
   this.environmentIntervalHandler = null;
 
   this.decoration = {
-    interval: 2000,
+    interval: 1000,
     initialX_left: 300,
-    initialX_right: 500
+    initialX_right: 500,
+    switch: -1
   };
 }
 
@@ -72,7 +73,7 @@ Generator.prototype.init = function(game) {
     if (game.paused) return;
 
     for (let i = 0; i < 1; i++) {
-      if (Math.random() > 0.5) {
+      if (this.decoration.switch > 0) {
         this.create(
           new Decoration(
             this.decoration.initialX_left - i * 10,
@@ -89,6 +90,7 @@ Generator.prototype.init = function(game) {
           "decorations"
         );
       }
+      this.decoration.switch = -this.decoration.switch;
     }
   }, this.decoration.interval);
 
@@ -164,6 +166,7 @@ Generator.prototype.updateCocaine = function(game, arrayName) {
       game.player.incrementScore(game);
     } else if (element.y > game.canvas.height) {
       this.destroy(index, arrayName);
+      game.player.decrementScore(game);
     } else {
       element.update(game);
     }
