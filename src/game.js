@@ -113,14 +113,16 @@ Game.prototype.calculateEnvironment = function(focalPoint) {
 };
 
 Game.prototype.loop = function(time) {
+  var t = this.time;
+
+  t.now = time || 0;
+  t.delta = t.now - t.then;
+
+  if (t.delta > t.interval) {
+    t.then = t.now - (t.delta % t.interval);
+  }
   if (!this.paused) {
-    var t = this.time;
-
-    t.now = time || 0;
-    t.delta = t.now - t.then;
-
     if (t.delta > t.interval) {
-      t.then = t.now - (t.delta % t.interval);
       this.update();
       this.render();
     }
