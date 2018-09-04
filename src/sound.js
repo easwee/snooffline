@@ -5,7 +5,7 @@ Sound.prototype.init = function(game) {
     MOVE: 1,
     PICKUP_COCAINE: 2,
     JUMP: 3,
-    BONUS: 4
+    PICKUP_BONUS: 4
   };
   this.startMusic();
 };
@@ -18,7 +18,7 @@ Sound.prototype.playSound = function(sound, data) {
     case this.sounds.MOVE:
       this.moveSound();
       break;
-    case this.sounds.BONUS:
+    case this.sounds.PICKUP_BONUS:
       this.bonusSound();
       break;
     case this.sounds.JUMP:

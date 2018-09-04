@@ -1,12 +1,14 @@
 function Generator(config) {
   this.items = {
     cocaine: [],
-    decorations: []
+    decorations: [],
+    bonus: []
   };
 
   this.updates = {
     cocaine: game => this.updateCocaine(game, "cocaine"),
-    decorations: game => this.updateDecorations(game, "decorations")
+    decorations: game => this.updateDecorations(game, "decorations"),
+    bonus: game => this.updateBonus(game, "bonus")
   };
 
   this.spawn = {
@@ -20,12 +22,17 @@ function Generator(config) {
   this.spawnIntervalHandler = null;
   this.changeIntervalHandler = null;
   this.environmentIntervalHandler = null;
+  this.bonusIntervalHandler = null;
 
   this.decoration = {
     interval: 1000,
     initialX_left: 300,
     initialX_right: 500,
     switch: -1
+  };
+
+  this.bonus = {
+    interval: 15000
   };
 }
 
@@ -98,6 +105,17 @@ Generator.prototype.init = function(game) {
     if (game.paused) return;
     this.spawn.direction = Math.random() > 0.5 ? -1 : 1;
   }, this.spawn.changeInterval);
+
+  this.bonusIntervalHandler = setInterval(() => {
+    this.create(
+      new Decoration(
+        (game.canvas.width / 2) -33 + Math.floor(Math.random() * 3)*33,
+        game.geometry.environment.horizontAtY,
+        'heroin'
+      ),
+      "bonus"
+    );
+  }, this.bonus.interval);
 };
 
 Generator.prototype.create = function(element, arrayName) {
@@ -117,6 +135,7 @@ Generator.prototype.destroy = function(index, arrayName) {
 Generator.prototype.render = function(game) {
   this.renderLine(game, "cocaine");
   this.renderArray(game, "decorations");
+  this.renderArray(game, "bonus");
 };
 
 Generator.prototype.renderLine = function(game, arrayName) {
@@ -150,6 +169,7 @@ Generator.prototype.renderArray = function(game, arrayName) {
 Generator.prototype.update = function(game) {
   this.updates["cocaine"](game);
   this.updates["decorations"](game);
+  this.updates["bonus"](game);
 };
 
 Generator.prototype.updateCocaine = function(game, arrayName) {
@@ -174,6 +194,24 @@ Generator.prototype.updateCocaine = function(game, arrayName) {
 Generator.prototype.updateDecorations = function(game, arrayName) {
   this.items[arrayName].forEach((element, index) => {
     if (element.y > game.canvas.height) {
+      this.destroy(index, arrayName);
+    } else {
+      element.update(game);
+    }
+  });
+};
+
+Generator.prototype.updateBonus = function(game, arrayName) {
+  this.items[arrayName].forEach((element, index) => {
+    if (
+      !game.player.didJump &&
+      element.y <= game.player.y &&
+      collision(element, game.player)
+    ) {
+      this.destroy(index, arrayName);
+      game.sound.playSound(game.sound.sounds.PICKUP_BONUS, game.player.score);
+      game.player.bonusPickup(game);
+    } else if (element.y > game.canvas.height) {
       this.destroy(index, arrayName);
     } else {
       element.update(game);

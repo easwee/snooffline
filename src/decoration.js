@@ -1,14 +1,15 @@
-function Decoration(x, y, image) {
+function Decoration(x, y, image = undefined) {
   this.x = x;
   this.y = y;
   this.startPosX = x;
   this.startPosY = y;
   this.width = 200;
   this.height = 200;
+  this.radius = 50;
   this.speed = 0.1;
   this.color = "#4744FF";
   this.images = ["girl1", "cards", "dice"];
-  this.image = this.images[Math.floor(Math.random() * 3)];
+  this.image = image ? image : this.images[Math.floor(Math.random() * this.images.length)];
 }
 
 Decoration.prototype.render = function(game) {
@@ -24,6 +25,12 @@ Decoration.prototype.render = function(game) {
     this.width * scale,
     this.height * scale
   );
+
+  // Radius for pickup
+  // game.ctx.beginPath();
+  // game.ctx.strokeStyle = "green";
+  // game.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+  // game.ctx.stroke();
 
   // X/Y cross for debug
   // game.ctx.strokeStyle = 'white';

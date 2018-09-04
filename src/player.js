@@ -34,7 +34,7 @@ Player.prototype.render = function(game) {
 
 Player.prototype.incrementScore = function(game) {
   if (!this.didJump) {
-    this.score++;
+    this.score +=  game.config.scoreIncrementFactor;
     this.totalScore++;
   }
 
@@ -49,6 +49,10 @@ Player.prototype.decrementScore = function(game) {
   if (this.score <= 0) {
     game.hasUnderdosed();
   }
+};
+
+Player.prototype.bonusPickup = function(game) {
+  game.config.scoreIncrementFactor += 1;
 };
 
 Player.prototype.update = function(game) {

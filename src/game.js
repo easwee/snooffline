@@ -10,6 +10,7 @@ function Game(config) {
     leftBorder: 150,
     rightBorder: 650,
     scoreLimit: 2000,
+    scoreIncrementFactor: 1,
     scoreDecrementFactor: 2
   };
 
