@@ -96,7 +96,6 @@ Player.prototype.update = function(game) {
     this.x = game.config.rightBorder;
     this.velocityX = 0;
   }
-  console.log(this.velocityX, this.velocityY);
   this.x += this.velocityX;
   this.y += this.velocityY;
 };

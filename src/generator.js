@@ -130,7 +130,6 @@ Generator.prototype.renderLine = function(game, arrayName) {
   ctx.lineWidth = 5;
 
   this.items[arrayName].forEach((element, index) => {
-    // console.log(element, index);
     const previousElement = element.previous;
     if (previousElement) {
       ctx.beginPath();
@@ -138,7 +137,6 @@ Generator.prototype.renderLine = function(game, arrayName) {
       ctx.lineTo(element.x, element.y);
       ctx.stroke();
     }
-    //element.render(game);
   });
   ctx.restore();
 };
