@@ -57,15 +57,16 @@ Environment.prototype.drawScore = function(game) {
   game.ctx.textAlign = "center";
   game.ctx.fillText(`-snooffline-`, this.canvas.width / 2, 30);
   game.ctx.font = "14px monospace";
-  game.ctx.fillText(`${~~game.player.score} mg`, this.canvas.width / 2, 60);
+  game.ctx.fillText(`Total snooffed: ${(~~game.player.totalScore).toFixed(2)}mg`, this.canvas.width / 2, 60);
+  game.ctx.fillText(`${(~~game.player.score*0.00025).toFixed(2)} mg/L`, this.canvas.width / 2, 80);
 
   //Overdose meter
   const rating = game.player.score / 5;
   game.ctx.strokeStyle = this.lineColor;
-  game.ctx.strokeRect(this.canvas.width / 2 - 200, 80, 400, 15);
+  game.ctx.strokeRect(this.canvas.width / 2 - 200, 100, 400, 15);
 
   game.ctx.fillStyle = "white";
-  game.ctx.fillRect(this.canvas.width / 2 - 200, 80, rating, 15);
+  game.ctx.fillRect(this.canvas.width / 2 - 200, 100, rating, 15);
 };
 
 Environment.prototype.drawPause = function(game) {
