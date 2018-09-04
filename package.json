@@ -7,6 +7,6 @@
     "parcel-bundler": "^1.9.7"
   },
   "scripts": {
-    "parcel": "rm -rf ./dist && parcel build index.html"
+    "parcel": "rm -rf ./dist && parcel build index.html && cd dist && rm *.map"
   }
 }
