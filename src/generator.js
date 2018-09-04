@@ -32,7 +32,7 @@ function Generator(config) {
   };
 
   this.bonus = {
-    interval: 15000
+    interval: 30000
   };
 }
 
