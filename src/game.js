@@ -80,7 +80,8 @@ Game.prototype.init = function() {
     this.addToCache("girl1", "src/girl_1.svg"),
     this.addToCache("player", "src/player.svg"),
     this.addToCache("cards", "src/cards.svg"),
-    this.addToCache("dice", "src/dice.svg")
+    this.addToCache("dice", "src/dice.svg"),
+    this.addToCache("heroin", "src/heroin.svg")
   ]);
 
   cached.then(() => {
