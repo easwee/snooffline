@@ -25,8 +25,8 @@ Player.prototype.render = function(game) {
   game.ctx.stroke();
   game.ctx.drawImage(
     game.cache["player"],
-    ~~this.x,
-    ~~(this.y - player.height),
+    ~~(this.x - 5),
+    ~~(this.y - player.height + 5),
     player.width,
     player.height
   );
@@ -34,7 +34,7 @@ Player.prototype.render = function(game) {
 
 Player.prototype.incrementScore = function(game) {
   if (!this.didJump) {
-    this.score +=  game.config.scoreIncrementFactor;
+    this.score += game.config.scoreIncrementFactor;
     this.totalScore++;
   }
 
@@ -44,7 +44,7 @@ Player.prototype.incrementScore = function(game) {
 };
 
 Player.prototype.decrementScore = function(game) {
-  this.score -= game.config.scoreDecrementFactor;
+  this.score -= game.config.scoreDecrementFactor * 1.5;
 
   if (this.score <= 0) {
     game.hasUnderdosed();

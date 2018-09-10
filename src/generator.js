@@ -14,7 +14,7 @@ function Generator(config) {
   this.spawn = {
     direction: -1, //Left -1, Right 1
     interval: 20, //ms
-    changeInterval: 100, //ms
+    changeInterval: 300, //ms
     lastPosition: undefined,
     edgeOffset: 20
   };
@@ -109,9 +109,9 @@ Generator.prototype.init = function(game) {
   this.bonusIntervalHandler = setInterval(() => {
     this.create(
       new Decoration(
-        (game.canvas.width / 2) -33 + Math.floor(Math.random() * 3)*33,
+        game.canvas.width / 2 - 33 + Math.floor(Math.random() * 3) * 33,
         game.geometry.environment.horizontAtY,
-        'heroin'
+        "heroin"
       ),
       "bonus"
     );
