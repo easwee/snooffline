@@ -85,7 +85,7 @@ Sound.prototype.pickupSound = function(data) {
   //   0
   // );
   //A
-  soundEffect(midiTable[66].frq + data * 0.1, 0.02, 0.04, "saw", 1, 0, 0);
+  soundEffect(midiTable[66].frq + data * 0.1, 0.02, 0.04, "triangle", 1, 0, 0);
 };
 
 Sound.prototype.bonusSound = function() {
