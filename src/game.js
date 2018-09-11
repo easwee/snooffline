@@ -1,4 +1,35 @@
-function Game(config) {
+function Game() {
+  this.restarting = false;
+
+  this.cache = {};
+  this.assetLoading = Promise.all([
+    this.addToCache("cocaine", "src/cocaine.png"),
+    this.addToCache("girl1", "src/girl_1.svg"),
+    this.addToCache("player", "src/player.svg"),
+    this.addToCache("cards", "src/cards.svg"),
+    this.addToCache("dice", "src/dice.svg"),
+    this.addToCache("heroin", "src/heroin.svg")
+  ]);
+}
+
+Game.prototype.addToCache = async function(id, graphicSrc) {
+  return new Promise((resolve, reject) => {
+    var canvas = document.createElement("canvas");
+    var context = canvas.getContext("2d");
+    var graphic = new Image();
+
+    graphic.src = graphicSrc;
+    graphic.onload = () => {
+      canvas.width = graphic.width;
+      canvas.height = graphic.height;
+      context.drawImage(graphic, 0, 0);
+      this.cache[id] = canvas;
+      resolve();
+    };
+  });
+};
+
+Game.prototype.init = function(config) {
   this.config = {
     canvasId: config || "display",
     fps: config || 60,
@@ -21,31 +52,11 @@ function Game(config) {
     delta: 0
   };
 
-  this.cache = {};
   this.overdosed = false;
   this.underdosed = false;
 
   this.paused = false;
-}
 
-Game.prototype.addToCache = async function(id, graphicSrc) {
-  return new Promise((resolve, reject) => {
-    var canvas = document.createElement("canvas");
-    var context = canvas.getContext("2d");
-    var graphic = new Image();
-
-    graphic.src = graphicSrc;
-    graphic.onload = () => {
-      canvas.width = graphic.width;
-      canvas.height = graphic.height;
-      context.drawImage(graphic, 0, 0);
-      this.cache[id] = canvas;
-      resolve();
-    };
-  });
-};
-
-Game.prototype.init = function() {
   this.canvas = document.getElementById(this.config.canvasId);
   this.canvas.width = 800; // window.innerWidth;
   this.canvas.height = 600; // window.innerHeight;
@@ -71,26 +82,24 @@ Game.prototype.init = function() {
   };
 
   this.environment = new Environment();
-  this.controls = new Controls();
+  
   this.player = new Player();
   this.generator = new Generator();
-  this.sound = new Sound();
 
-  let cached = Promise.all([
-    this.addToCache("cocaine", "src/cocaine.png"),
-    this.addToCache("girl1", "src/girl_1.svg"),
-    this.addToCache("player", "src/player.svg"),
-    this.addToCache("cards", "src/cards.svg"),
-    this.addToCache("dice", "src/dice.svg"),
-    this.addToCache("heroin", "src/heroin.svg")
-  ]);
+  if(!this.sound) {
+    this.sound = new Sound();
+    this.sound.init(this);
+  }
 
-  cached.then(() => {
+  if(!this.controls) {
+    this.controls = new Controls();
+    this.controls.init(this);
+  }
+
+  this.assetLoading.then(() => {
     this.environment.init(this);
     this.generator.init(this);
-    this.player.init(this);
-    this.controls.init(this);
-    this.sound.init();
+    this.player.init(this);    
     this.loop();
   });
 };
@@ -179,4 +188,13 @@ Game.prototype.hasUnderdosed = function() {
   this.paused = true;
   this.sound.stopMusic();
   this.underdosed = true;
+};
+
+Game.prototype.restartGame = function() {
+  delete this.environment;
+  delete this.player;
+  delete this.generator;
+
+  this.init();
+  console.log("restart");
 };

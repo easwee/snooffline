@@ -5,5 +5,6 @@ var ENUMS = {
   RIGHT: 39,
   DOWN: 40,
   PAUSE: 19,
-  P: 80
+  P: 80,
+  RESTART: 82,
 };

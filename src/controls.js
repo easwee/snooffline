@@ -23,6 +23,11 @@ Controls.prototype.init = function(game) {
         return;
       }
 
+      if (event.keyCode === ENUMS.RESTART) {
+        this.handleGameRestart();
+        return;
+      }
+
       this.onKeyup(event);
     },
     false
@@ -43,5 +48,9 @@ Controls.prototype.init = function(game) {
       game.sound.stopMusic();
     }
     game.paused = !game.paused;
+  };
+
+  this.handleGameRestart = event => {
+    game.restartGame();
   };
 };
