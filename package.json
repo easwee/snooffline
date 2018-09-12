@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Snoofling game",
   "repository": "git@github.com:easwee/snooffline.git",
-  "dependencies": {
+  "devDependencies": {
     "parcel-bundler": "^1.9.7"
   },
   "scripts": {
-    "parcel": "rm -rf ./dist && parcel build index.html && cd dist && rm *.map",
-    "test": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && cd dist && serve ."
+    "test": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && cd dist && serve .",
+    "build": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && env GZIP=-9 tar cvzf game.tar.gz dist/"    
   }
 }
