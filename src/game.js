@@ -12,7 +12,7 @@ function Game() {
   ]);
 }
 
-Game.prototype.addToCache = async function(id, graphicSrc) {
+Game.prototype.addToCache = function(id, graphicSrc) {
   return new Promise((resolve, reject) => {
     var canvas = document.createElement("canvas");
     var context = canvas.getContext("2d");
