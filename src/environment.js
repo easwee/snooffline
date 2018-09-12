@@ -205,3 +205,5 @@ Environment.prototype.drawRoadLines = function(game) {
   game.ctx.stroke();
   game.ctx.restore();
 };
+
+window.Environment = Environment

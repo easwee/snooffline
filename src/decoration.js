@@ -51,3 +51,5 @@ Decoration.prototype.update = function(game) {
     this.y
   ).x;
 };
+
+window.Decoration = Decoration

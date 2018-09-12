@@ -1,4 +1,4 @@
-midiTable = [
+window.midiTable = [
   { note: "C1", midi: 0, frq: 8.1757989156 },
   { note: "Db", midi: 1, frq: 8.661957218 },
   { note: "D", midi: 2, frq: 9.1770239974 },

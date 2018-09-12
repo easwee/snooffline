@@ -54,3 +54,5 @@ Controls.prototype.init = function(game) {
     game.restartGame();
   };
 };
+
+window.Controls = Controls

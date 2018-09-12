@@ -28,3 +28,5 @@ Cocaine.prototype.update = function(game) {
       .x -
     this.width / 2;
 };
+
+window.Cocaine = Cocaine;

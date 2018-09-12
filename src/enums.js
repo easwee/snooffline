@@ -1,4 +1,4 @@
-var ENUMS = {
+window.ENUMS = {
   SPACE: 32,
   LEFT: 37,
   UP: 38,

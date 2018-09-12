@@ -166,7 +166,7 @@ Experiment by changing these parameters to see what kinds of effects you can cre
 your own library of custom sound effects for games.
 */
 
-function soundEffect(
+window.soundEffect = function soundEffect(
   frequencyValue,      //The sound's fequency pitch in Hertz
   attack,              //The time, in seconds, to fade the sound in
   decay,               //The time, in seconds, to fade the sound out

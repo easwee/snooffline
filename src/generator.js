@@ -218,3 +218,5 @@ Generator.prototype.updateBonus = function(game, arrayName) {
     }
   });
 };
+
+window.Generator = Generator;

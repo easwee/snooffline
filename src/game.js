@@ -1,14 +1,14 @@
+
 function Game() {
   this.restarting = false;
 
   this.cache = {};
   this.assetLoading = Promise.all([
-    this.addToCache("cocaine", "src/cocaine.png"),
-    this.addToCache("girl1", "src/girl_1.svg"),
-    this.addToCache("player", "src/player.svg"),
-    this.addToCache("cards", "src/cards.svg"),
-    this.addToCache("dice", "src/dice.svg"),
-    this.addToCache("heroin", "src/heroin.svg")
+    this.addToCache("girl1", "./girl_1.svg"),
+    this.addToCache("player", "./player.svg"),
+    this.addToCache("cards", "./cards.svg"),
+    this.addToCache("dice", "./dice.svg"),
+    this.addToCache("heroin", "./heroin.svg")
   ]);
 }
 
@@ -198,3 +198,5 @@ Game.prototype.restartGame = function() {
   this.init();
   console.log("restart");
 };
+
+window.Game = Game;

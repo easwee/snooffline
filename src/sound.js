@@ -133,3 +133,5 @@ Sound.prototype.backgroundMusic = function() {
   tick(12);
   tock(14);
 };
+
+window.Sound = Sound

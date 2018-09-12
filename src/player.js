@@ -105,3 +105,5 @@ Player.prototype.jump = function(jumpHeight) {
   this.didJump = true;
   this.velocityY = -jumpHeight;
 };
+
+window.Player = Player;

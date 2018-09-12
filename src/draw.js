@@ -24,3 +24,5 @@ function drawCocaine(game) {
 
   return canvas;
 }
+
+window.drawCocaine = drawCocaine
