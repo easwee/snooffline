@@ -73,18 +73,7 @@ Sound.prototype.moveSound = function() {
   // );
 };
 
-Sound.prototype.pickupSound = function(data) {
-  //D
-  // soundEffect(
-  //   midiTable[34].frq + data / 5,
-  //   0.0002,
-  //   0.0004,
-  //   "triangle",
-  //   1,
-  //   0,
-  //   0
-  // );
-  //A
+Sound.prototype.pickupSound = function(data) {  
   soundEffect(midiTable[66].frq + data * 0.1, 0.02, 0.04, "triangle", 1, 0, 0);
 };
 
