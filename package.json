@@ -8,6 +8,6 @@
   },
   "scripts": {
     "test": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && cd dist && serve .",
-    "build": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && zip -9 game.zip dist/* && ls -lh game.zip"    
+    "build": "rm -rf ./dist && parcel build --no-source-maps --experimental-scope-hoisting index.html && cp src/*.svg dist/ && cd dist && zip -9 game.zip * && mv game.zip ../ && cd .. && ls -lh game.zip"    
   }
 }
