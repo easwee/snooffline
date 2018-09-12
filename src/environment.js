@@ -69,8 +69,14 @@ Environment.prototype.drawScore = function(game) {
     80
   );
 
-  for(let i = 1; i < game.config.scoreIncrementFactor; i++) {
-    game.ctx.drawImage(game.cache["heroin"],  this.canvas.width - 25 - 25*i, this.canvas.height - 50, 40, 40);
+  for (let i = 1; i < game.config.scoreIncrementFactor; i++) {
+    game.ctx.drawImage(
+      game.cache["heroin"],
+      this.canvas.width - 25 - 25 * i,
+      this.canvas.height - 50,
+      40,
+      40
+    );
   }
 
   //Overdose meter
@@ -80,7 +86,6 @@ Environment.prototype.drawScore = function(game) {
 
   game.ctx.fillStyle = "white";
   game.ctx.fillRect(this.canvas.width / 2 - 200, 100, rating, 15);
-
 };
 
 Environment.prototype.drawPause = function(game) {
@@ -96,7 +101,11 @@ Environment.prototype.drawOverdose = function(game) {
   game.ctx.fillRect(0, 10, this.canvas.width, 30);
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "22px monospace";
-  game.ctx.fillText(`You just overdosed! Dead man.`, this.canvas.width / 2, 30);
+  game.ctx.fillText(
+    `-overdosed-press-R-to-restart-`,
+    this.canvas.width / 2,
+    30
+  );
 };
 
 Environment.prototype.drawUnderdose = function(game) {
@@ -105,7 +114,7 @@ Environment.prototype.drawUnderdose = function(game) {
   game.ctx.fillStyle = this.lineColor;
   game.ctx.font = "22px monospace";
   game.ctx.fillText(
-    `Depression kicked in. Party is over!`,
+    `-depression-kicked-in-press-R-to-restart-`,
     this.canvas.width / 2,
     30
   );
