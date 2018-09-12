@@ -1,2 +1,3 @@
 # snooffline
-A game about getting off the line
+
+A game about not getting off-the-line. Keep the party going!
