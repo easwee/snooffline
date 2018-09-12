@@ -1,4 +1,3 @@
-
 function Game() {
   this.restarting = false;
 
@@ -36,7 +35,7 @@ Game.prototype.init = function(config) {
     mute: false,
     gravity: 0.05,
     friction: 0.5,
-    jumpImpulse: 30,
+    jumpImpulse: 20,
     groundPoint: 500,
     leftBorder: 150,
     rightBorder: 650,
@@ -82,16 +81,16 @@ Game.prototype.init = function(config) {
   };
 
   this.environment = new Environment();
-  
+
   this.player = new Player();
   this.generator = new Generator();
 
-  if(!this.sound) {
+  if (!this.sound) {
     this.sound = new Sound();
     this.sound.init(this);
   }
 
-  if(!this.controls) {
+  if (!this.controls) {
     this.controls = new Controls();
     this.controls.init(this);
   }
@@ -99,7 +98,7 @@ Game.prototype.init = function(config) {
   this.assetLoading.then(() => {
     this.environment.init(this);
     this.generator.init(this);
-    this.player.init(this);    
+    this.player.init(this);
     this.loop();
   });
 };
