@@ -4,7 +4,7 @@ function Game() {
 
   this.cache = {};
   this.assetLoading = Promise.all([
-    this.addToCache("girl1", "./girl_1.svg"),
+    this.addToCache("girl1", "./girl.svg"),
     this.addToCache("player", "./player.svg"),
     this.addToCache("cards", "./cards.svg"),
     this.addToCache("dice", "./dice.svg"),
