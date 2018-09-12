@@ -49,6 +49,7 @@ Player.prototype.decrementScore = function(game) {
 
 Player.prototype.bonusPickup = function(game) {
   game.config.scoreIncrementFactor += 1;
+  game.config.scoreDecrementFactor += .5;
 };
 
 Player.prototype.update = function(game) {
