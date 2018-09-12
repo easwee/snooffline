@@ -244,53 +244,10 @@ window.soundEffect = function soundEffect(
   if (attack > 0) fadeIn(volume);
   fadeOut(volume);
   if (pitchBendAmount > 0) pitchBend(oscillator);
-  if (echo) addEcho(volume);
-  if (reverb) addReverb(volume);
   if (dissonance > 0) addDissonance();
 
   //Play the sound
   play(oscillator);
-
-  //The helper functions:
-  
-  function addReverb(volumeNode) {
-    var convolver = actx.createConvolver();
-    convolver.buffer = impulseResponse(reverb[0], reverb[1], reverb[2], actx);
-    volumeNode.connect(convolver);
-    convolver.connect(pan);
-  }
-
-  function addEcho(volumeNode) {
-
-    //Create the nodes
-    var feedback = actx.createGain(),
-        delay = actx.createDelay(),
-        filter = actx.createBiquadFilter();
-
-    //Set their values (delay time, feedback time and filter frequency)
-    delay.delayTime.value = echo[0];
-    feedback.gain.value = echo[1];
-    if (echo[2]) filter.frequency.value = echo[2];
-
-    //Create the delay feedback loop, with
-    //optional filtering
-    delay.connect(feedback);
-    if (echo[2]) {
-      feedback.connect(filter);
-      filter.connect(delay);
-    } else {
-      feedback.connect(delay);
-    }
-
-    //Connect the delay loop to the oscillator's volume
-    //node, and then to the destination
-    volumeNode.connect(delay);
-
-    //Connect the delay loop to the main sound chain's
-    //pan node, so that the echo effect is directed to
-    //the correct speaker
-    delay.connect(pan);
-  }
 
   //The `fadeIn` function
   function fadeIn(volumeNode) {
