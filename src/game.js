@@ -195,7 +195,6 @@ Game.prototype.restartGame = function() {
   delete this.generator;
 
   this.init();
-  console.log("restart");
 };
 
 window.Game = Game;
