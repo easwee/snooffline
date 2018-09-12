@@ -2,10 +2,9 @@ function Sound() {}
 
 Sound.prototype.init = function(game) {
   this.sounds = {
-    MOVE: 1,
-    PICKUP_COCAINE: 2,
-    JUMP: 3,
-    PICKUP_BONUS: 4
+    PICKUP_COCAINE: 1,
+    JUMP: 2,
+    PICKUP_BONUS: 3
   };
   this.startMusic();
 };
@@ -14,9 +13,6 @@ Sound.prototype.playSound = function(sound, data) {
   switch (sound) {
     case this.sounds.PICKUP_COCAINE:
       this.pickupSound(data);
-      break;
-    case this.sounds.MOVE:
-      this.moveSound();
       break;
     case this.sounds.PICKUP_BONUS:
       this.bonusSound();
@@ -55,26 +51,8 @@ Sound.prototype.jumpSound = function() {
   );
 };
 
-Sound.prototype.moveSound = function() {
-  // soundEffect(
-  //   110, //frequency
-  //   0.01, //attack
-  //   0.01, //decay
-  //   "sine", //waveform
-  //   1, //volume
-  //   0.8, //pan
-  //   0, //wait before playing
-  //   600, //pitch bend amount
-  //   true, //reverse
-  //   100, //random pitch range
-  //   0, //dissonance
-  //   undefined, //echo array: [delay, feedback, filter]
-  //   undefined //reverb array: [duration, decay, reverse?]
-  // );
-};
-
 Sound.prototype.pickupSound = function(data) {  
-  soundEffect(midiTable[66].frq + data * 0.1, 0.02, 0.04, "triangle", 1, 0, 0);
+  soundEffect(midiTable[66] + data * 0.1, 0.02, 0.04, "triangle", 1, 0, 0);
 };
 
 Sound.prototype.bonusSound = function() {
@@ -91,9 +69,9 @@ Sound.prototype.backgroundMusic = function() {
   const pb = 0;
   const atk = 0.05;
   const g = (l, f, d = 0.2) => {
-    soundEffect(midiTable[f].frq, atk, d, "triangle", 1, 0, l / s, pb);
-    soundEffect(midiTable[f + 7].frq, atk, d, "triangle", 1, 0, l / s, pb);
-    soundEffect(midiTable[f + 12].frq, atk, d, "triangle", 1, 0, l / s, pb);
+    soundEffect(midiTable[f], atk, d, "triangle", 1, 0, l / s, pb);
+    soundEffect(midiTable[f + 7], atk, d, "triangle", 1, 0, l / s, pb);
+    soundEffect(midiTable[f + 12], atk, d, "triangle", 1, 0, l / s, pb);
   };
 
   const tick = l => soundEffect(40, 0, 0.1, "triangle", 15, 0, l / s, pb);
